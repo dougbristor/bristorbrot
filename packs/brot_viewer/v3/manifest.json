@@ -11,8 +11,8 @@
     },
     {
       "path": "app.js",
-      "sha256": "2e5b6b3a74e5f22747ab3463f6e53ed17a48ac28077001bb6224fe0be57003c1",
-      "lines": 311
+      "sha256": "469fd2eb2c3b61c386b9d00434aa20c7c99da7f08f8923771aa7c24d85a71856",
+      "lines": 323
     },
     {
       "path": "render.js",

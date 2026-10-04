@@ -4,6 +4,18 @@ import { createCSelector, cFromPlane } from './code/c_selector/v1.js';
 import { createCubeSelector, escape, MAPS as CUBES, STEPS } from './code/chi_selector/v1.js';
 import { SHADOW_DEFAULTS } from './code/bdm_shadow/v1.js';
 
+// GPU this tab renders on, shown in the status line. On this machine the same page runs ~8x slower on the Intel P630 than
+// on the P4000 (10-04), and a tab on the wrong GPU reads as a code regression. Vendor in the line, full string on hover.
+const GPU = (() => {
+  const g = document.createElement('canvas').getContext('webgl2'), e = g && g.getExtension('WEBGL_debug_renderer_info');
+  const full = g ? String(e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER)) : 'no WebGL2';
+  const short = /nvidia|geforce|quadro|rtx|gtx/i.test(full) ? 'NVIDIA' : /intel/i.test(full) ? 'Intel' : /amd|radeon/i.test(full) ? 'AMD'
+    : /swiftshader|llvmpipe|software/i.test(full) ? 'software' : full.replace(/, or similar$/, '').slice(0, 24);
+  g?.getExtension('WEBGL_lose_context')?.loseContext();
+  const st = document.getElementById('status'); if (st) st.title = 'GPU: ' + full;
+  return { full, short };
+})();
+
 // The sets. Each names its block map, its C picker, and a default Julia C (real, e1, e2, e3).
 // picker: 'quad' (c_selector), 'cube' (chi_selector, with its bracket), 'b1' (c_selector held at θ = 0), or 'b1cube'
 // (chi_selector held at θ = 0: there both brackets are the complex z³ + c, the slice every real-axis cut of q³ shows).
@@ -56,7 +68,7 @@ function render() {
   requestAnimationFrame(() => {
     queued = false;
     const ms = renderer.draw(SETS[state.set].map, frameState());
-    $('status').textContent = `${setName(state)} · ${ms.toFixed(0)} ms`;
+    $('status').textContent = `${setName(state)} · ${ms.toFixed(0)} ms · ${GPU.short}`;
     const g = gen;
     if (state.refine > 1 && state.view === 0 && renderer.canAccumulate) setTimeout(() => refine(g, 1), 120);
   });
@@ -65,7 +77,7 @@ function render() {
 function refine(g, k) {
   if (g !== gen) return;
   const ms = renderer.accumulate(SETS[state.set].map, frameState(), k);
-  $('status').textContent = `${setName(state)} · still refine ${k + 1}/${state.refine} · ${ms.toFixed(0)} ms`;
+  $('status').textContent = `${setName(state)} · still refine ${k + 1}/${state.refine} · ${ms.toFixed(0)} ms · ${GPU.short}`;
   if (k + 1 < state.refine) requestAnimationFrame(() => refine(g, k + 1));
 }
 
