@@ -1,0 +1,232 @@
+{
+  "story": "de_ray",
+  "title": "The life of one ray — rendering the Bristorbrot with a directional distance estimate",
+  "version": "v1",
+  "as_of": "2026-10-02",
+  "built": "2026-10-02T22:06:03Z",
+  "steps": [
+    {
+      "step": 0,
+      "question": "What numbers are these?",
+      "atoms": [
+        "conv.rank_index",
+        "conv.rule",
+        "conv.not_quaternion",
+        "conv.slots4",
+        "conv.vectors",
+        "conv.hand",
+        "conv.mirror"
+      ]
+    },
+    {
+      "step": 1,
+      "question": "How do I square, and what is its Jacobian?",
+      "atoms": [
+        "sq.jacobian"
+      ]
+    }
+  ],
+  "atoms": [
+    {
+      "id": "conv.rank_index",
+      "step": 0,
+      "kind": "prose",
+      "title": "Numbers are indexed by rank, not by letter",
+      "status": "definition",
+      "path": "atoms/conv.rank_index.md",
+      "sha256": "850dde5fe6f75af2c1882f6d43d8bf1ffcedf90a55151b7acbafaa4458e41773"
+    },
+    {
+      "id": "conv.rule",
+      "step": 0,
+      "kind": "prose",
+      "title": "The whole multiplication rule",
+      "status": "proven",
+      "path": "atoms/conv.rule.md",
+      "sha256": "0ca85030248158ce7b6d6dd27ad6f89ecaa399c3d3c937b975e2acd9424a074e"
+    },
+    {
+      "id": "conv.not_quaternion",
+      "step": 0,
+      "kind": "prose",
+      "title": "This is not a quaternion — read this before porting with an AI",
+      "status": "proven",
+      "path": "atoms/conv.not_quaternion.md",
+      "sha256": "dd86a08778b41d2507071fc210965b2eb9190a760b7dc65c0d936ac063efc53d"
+    },
+    {
+      "id": "conv.slots4",
+      "step": 0,
+      "kind": "prose",
+      "title": "Shader letters — and w is not the scalar",
+      "status": "definition",
+      "path": "atoms/conv.slots4.md",
+      "sha256": "d62800468fa6a5d525e224a0e37dea8093a2ca49c880bc2df070d5b06aa90a3a"
+    },
+    {
+      "id": "conv.vectors",
+      "step": 0,
+      "kind": "vectors",
+      "title": "Test vectors, and the wrong answers they must reject",
+      "status": "proven",
+      "path": "atoms/conv.vectors.md",
+      "sha256": "0457c55d62f8b930ffe782076f08c1b910713ce53ac824f9210e01591f087b74"
+    },
+    {
+      "id": "conv.hand",
+      "step": 0,
+      "kind": "prose",
+      "title": "The square cannot see the hand; the product can",
+      "status": "proven",
+      "path": "atoms/conv.hand.md",
+      "sha256": "b74e307aaa213198b4fa57d739aa068a7e3cf0ea7038ffc8276c22ccd355e51c"
+    },
+    {
+      "id": "conv.mirror",
+      "step": 0,
+      "kind": "story",
+      "title": "Why the hand hides — the reversed order",
+      "status": "story",
+      "path": "atoms/conv.mirror.md",
+      "sha256": "d94817710997331afb0f854667e351571991e2bb05ab96c3d3ba9de80995ccbf"
+    },
+    {
+      "id": "sq.jacobian",
+      "step": 1,
+      "kind": "code",
+      "title": "The square and its Jacobian — the two halves every derivative needs",
+      "status": "proven",
+      "path": "atoms/sq.jacobian.md",
+      "sha256": "9b1b87bb299da17bf5bf892fbf8ffd4195040a37563c2eddf290a8ec537cacd9"
+    }
+  ],
+  "blocks": [
+    {
+      "id": "bristor_product",
+      "version": "v1",
+      "files": [
+        {
+          "path": "code/bristor_product/conform.mjs",
+          "sha256": "a9c4fa246b64c5653724e024ef235a6d3df5755c7231cd0e70a044e6896d000e"
+        },
+        {
+          "path": "code/bristor_product/conform.py",
+          "sha256": "d7543b889be4cf7cabee27657f168974b903d928a886d159cbc5078b5d356072"
+        },
+        {
+          "path": "code/bristor_product/conform_glsl.mjs",
+          "sha256": "0f5100312f85e953cbf31e92a0d9279c4a26c2ceeec22bfec1ea3b5c8b78da1d"
+        },
+        {
+          "path": "code/bristor_product/v1.glsl",
+          "sha256": "18453a30ee3ab63d35b49d826b72c6e2dd454fbf3ec33648d538e63c56cd3dc9"
+        },
+        {
+          "path": "code/bristor_product/v1.js",
+          "sha256": "0b706a4aa692984729f269728f4b503b5759aefcd83da7932460ea4f19df5709"
+        },
+        {
+          "path": "code/bristor_product/v1.py",
+          "sha256": "5e556c0ebb4fdedc4447760c691f53dd1e11105b88090b26bdeede16a4123edf"
+        },
+        {
+          "path": "code/bristor_product/vectors.json",
+          "sha256": "83be4ccef07176a43eafcade2fafb5ff44e9bb24f0841af552d2353698822d23"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.py",
+          "script": "conform.py",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 18 cases, max |diff| from canon = 0",
+            "squareJacobian(z): 16 cases, max |diff| from canon = 0",
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted wrong rule)",
+          "selftest_lines": [
+            "[ok ] canon: expected PASS, got PASS",
+            "[ok ] legacy j_roll table: expected FAIL, got FAIL",
+            "[ok ] opposite algebra: expected FAIL, got FAIL",
+            "[ok ] quaternion: expected FAIL, got FAIL",
+            "[ok ] canon with slots reversed: expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (J^T for J): expected FAIL, got FAIL",
+            "[ok ] opposite algebra, square only: expected PASS (squaring is blind to the hand), got PASS"
+          ]
+        },
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 18 cases, max |diff| from canon = 0.00",
+            "squareJacobian(z): 16 cases, max |diff| from canon = 0.00",
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted wrong rule)",
+          "selftest_lines": [
+            "[ok ] canon: expected PASS, got PASS",
+            "[ok ] legacy j_roll table: expected FAIL, got FAIL",
+            "[ok ] opposite algebra: expected FAIL, got FAIL",
+            "[ok ] quaternion: expected FAIL, got FAIL",
+            "[ok ] canon with slots reversed: expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (J^T for J): expected FAIL, got FAIL",
+            "[ok ] opposite algebra, square only: expected PASS (squaring is blind to the hand), got PASS"
+          ]
+        },
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 15 cases, max |diff| from canon = 0.00; skipped n={\"5\":3}",
+            "squareJacobian(z): 10 cases, max |diff| from canon = 0.00; skipped n={\"4\":3,\"5\":3}",
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted wrong rule)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] j_roll product (rank order reversed): expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (rows given as columns): expected FAIL, got FAIL"
+          ]
+        }
+      ]
+    }
+  ],
+  "conventions": {
+    "index": "rank",
+    "roll": "i-roll",
+    "slots4": [
+      "1",
+      "e1",
+      "e2",
+      "e3"
+    ]
+  },
+  "licence": {
+    "code": "MIT",
+    "data": "CC0-1.0",
+    "text": "CC-BY-4.0",
+    "attribution": "Bristorbrot / Doug Bristor, bristorbrot.org",
+    "attribution_required": false
+  },
+  "credits": [
+    "Doug Bristor",
+    "caro",
+    "fable"
+  ],
+  "checks": {
+    "export_lint": {
+      "tool": "insights/tools/export_lint.py",
+      "result": "clean",
+      "selftest": "selftest: fires 2 hits",
+      "output": "lint: clean (atoms)"
+    }
+  },
+  "notes": [],
+  "not_included": {
+    "block.md": "internal planting record (the Ledger); the atoms are the public description",
+    "PORTING.md": "covers the whole story (steps 0-8); ships with a pack that covers every step"
+  }
+}

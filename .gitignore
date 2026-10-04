@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+# agent session files
+.relay/
+# build scratch (a failed or interrupted build)
+.tmp-*
+packs/.tmp-*

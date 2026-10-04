@@ -1,0 +1,420 @@
+{
+  "core": "Bristorbrot core blocks",
+  "built": "2026-10-04T09:43:29Z",
+  "blocks": [
+    {
+      "id": "bristor_product",
+      "version": "v1",
+      "files": [
+        {
+          "path": "bristor_product/conform.mjs",
+          "sha256": "235844d528851b2e0edac8f261d842899e5b3cd827ee782cf16ca952030c41db"
+        },
+        {
+          "path": "bristor_product/conform.py",
+          "sha256": "d7543b889be4cf7cabee27657f168974b903d928a886d159cbc5078b5d356072"
+        },
+        {
+          "path": "bristor_product/conform_glsl.mjs",
+          "sha256": "0f5100312f85e953cbf31e92a0d9279c4a26c2ceeec22bfec1ea3b5c8b78da1d"
+        },
+        {
+          "path": "bristor_product/v1.glsl",
+          "sha256": "18453a30ee3ab63d35b49d826b72c6e2dd454fbf3ec33648d538e63c56cd3dc9"
+        },
+        {
+          "path": "bristor_product/v1.js",
+          "sha256": "d7087ec9bc2af9c0add8ffaa7f22c7f7cf2e7c39e12c2e52e5655ccd74738fb8"
+        },
+        {
+          "path": "bristor_product/v1.py",
+          "sha256": "5e556c0ebb4fdedc4447760c691f53dd1e11105b88090b26bdeede16a4123edf"
+        },
+        {
+          "path": "bristor_product/vectors.json",
+          "sha256": "83be4ccef07176a43eafcade2fafb5ff44e9bb24f0841af552d2353698822d23"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.py",
+          "script": "conform.py",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 18 cases, max |diff| from canon = 0",
+            "squareJacobian(z): 16 cases, max |diff| from canon = 0",
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] canon: expected PASS, got PASS",
+            "[ok ] legacy j_roll table: expected FAIL, got FAIL",
+            "[ok ] opposite algebra: expected FAIL, got FAIL",
+            "[ok ] quaternion: expected FAIL, got FAIL",
+            "[ok ] canon with slots reversed: expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (J^T for J): expected FAIL, got FAIL",
+            "[ok ] opposite algebra, square only: expected PASS (squaring is blind to the hand), got PASS"
+          ]
+        },
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 18 cases, max |diff| from canon = 0.00",
+            "squareJacobian(z): 16 cases, max |diff| from canon = 0.00",
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] canon: expected PASS, got PASS",
+            "[ok ] legacy j_roll table: expected FAIL, got FAIL",
+            "[ok ] opposite algebra: expected FAIL, got FAIL",
+            "[ok ] quaternion: expected FAIL, got FAIL",
+            "[ok ] canon with slots reversed: expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (J^T for J): expected FAIL, got FAIL",
+            "[ok ] opposite algebra, square only: expected PASS (squaring is blind to the hand), got PASS",
+            "[ok ] fast path drifting from general (jv3 sign slip): expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "mul(a, b): 15 cases, max |diff| from canon = 0.00; skipped n={\"5\":3}",
+            "squareJacobian(z): 10 cases, max |diff| from canon = 0.00; skipped n={\"4\":3,\"5\":3}",
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] j_roll product (rank order reversed): expected FAIL, got FAIL",
+            "[ok ] transposed Jacobian (rows given as columns): expected FAIL, got FAIL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bristor_cube",
+      "version": "v1",
+      "files": [
+        {
+          "path": "bristor_cube/conform.mjs",
+          "sha256": "dbcb5a33261df2e64c455e64a2758eb02442f361f4c8c57f5d1aea8e6d6a1ca4"
+        },
+        {
+          "path": "bristor_cube/conform.py",
+          "sha256": "920f4a6c07a97574ba1a9d5e5d48f5c3a09758c00dd615d07c33079860bc54f1"
+        },
+        {
+          "path": "bristor_cube/conform_glsl.mjs",
+          "sha256": "2ca55550bdcf4e7e7f430e96f3dfbb54c84680fd943ed900ea1999e12f42e081"
+        },
+        {
+          "path": "bristor_cube/make_vectors.py",
+          "sha256": "ed62a884607630e0de8684e21fc0550857f77d3a840bfcb6dad1bc2030a1754a"
+        },
+        {
+          "path": "bristor_cube/v1.glsl",
+          "sha256": "f320b34e37c642d93c3c34b413be3c3858305f674c54b28e218e46351482d480"
+        },
+        {
+          "path": "bristor_cube/v1.js",
+          "sha256": "af4d9e671b09b6680ebb60a51670b65bf8391c6d821f590fa525370fd8d19c43"
+        },
+        {
+          "path": "bristor_cube/v1.py",
+          "sha256": "a7c8593c57e790fe7e2deb15078c7ee23c248d62c89e427dd3e902abfa818831"
+        },
+        {
+          "path": "bristor_cube/vectors.json",
+          "sha256": "8357b6bda8b10033bd9270346372574c8f1e98778e2fa7184e726908a3d7eb93"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.py",
+          "script": "conform.py",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.py as shipped: expected PASS, got PASS",
+            "[ok ] brackets exchanged: expected FAIL, got FAIL",
+            "[ok ] derivative drops the (z z) v term: expected FAIL, got FAIL",
+            "[ok ] cube from the square alone: both brackets = (z z) z: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.js as shipped: expected PASS, got PASS",
+            "[ok ] brackets exchanged: expected FAIL, got FAIL",
+            "[ok ] derivative drops the (z z) v term: expected FAIL, got FAIL",
+            "[ok ] cube from the square alone: both brackets = (z z) z: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] brackets exchanged: expected FAIL, got FAIL",
+            "[ok ] derivative drops the (z z) v term: expected FAIL, got FAIL",
+            "[ok ] cube from the square alone (R = L): expected FAIL, got FAIL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quaternion_product",
+      "version": "v1",
+      "files": [
+        {
+          "path": "quaternion_product/conform.mjs",
+          "sha256": "f982a2542236ce8f05faef03dfd7364c048545bb79c9ef3a87dfba475a778452"
+        },
+        {
+          "path": "quaternion_product/conform.py",
+          "sha256": "f0b05b0f4633fbf2a86ab45716f55329cafa99417caffd7affbacfa6eb7c49cb"
+        },
+        {
+          "path": "quaternion_product/conform_glsl.mjs",
+          "sha256": "2ad2fdbd1a53cd662923dc373270d6e8a6f0838adc37bea791c6668faac0984b"
+        },
+        {
+          "path": "quaternion_product/make_vectors.py",
+          "sha256": "e9ed9b19106ce8dc581f3a38831e732ab70f79a266df7d1336c5a2e9f284b53f"
+        },
+        {
+          "path": "quaternion_product/v1.glsl",
+          "sha256": "308c8de2ee7174b8d6265d44d687f245d37a17f89fba1d49c3c6463f44dc8bde"
+        },
+        {
+          "path": "quaternion_product/v1.js",
+          "sha256": "71f80c6658e849a71762615d5e0a9d552c508243c74226e4f9d5f7136abb8bfd"
+        },
+        {
+          "path": "quaternion_product/v1.py",
+          "sha256": "791360312725de0656dfef93557d36186ba01b0b4c00391ed0f68421ce49f23f"
+        },
+        {
+          "path": "quaternion_product/vectors.json",
+          "sha256": "5b3443e3bf89a9fdd8aaa1256c4923b6fb0a9f8f00a6f2aa53d890f82df62d6b"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.py",
+          "script": "conform.py",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.py as shipped: expected PASS, got PASS",
+            "[ok ] Bristorian product: expected FAIL, got FAIL",
+            "[ok ] operands swapped: expected FAIL, got FAIL",
+            "[ok ] real part read from slot w: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.js as shipped: expected PASS, got PASS",
+            "[ok ] Bristorian product: expected FAIL, got FAIL",
+            "[ok ] operands swapped: expected FAIL, got FAIL",
+            "[ok ] real part read from slot w: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] operands swapped (i·j = −k): expected FAIL, got FAIL",
+            "[ok ] commutative product (cross term dropped): expected FAIL, got FAIL",
+            "[ok ] real part in w: expected FAIL, got FAIL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brot_de_march",
+      "version": "v1",
+      "files": [
+        {
+          "path": "brot_de_march/B2_PORTING.md",
+          "sha256": "707fa917b6356095ffba0b27b92fe3905a4c96bedc84f273e14c3c5c6b6407aa"
+        },
+        {
+          "path": "brot_de_march/b2_conform.mjs",
+          "sha256": "8e47834780c91f95a17264bb1036086bbb449bc0569f1d223cfc404bf7d8b8c3"
+        },
+        {
+          "path": "brot_de_march/b2_reference.mjs",
+          "sha256": "009437c0bff692fa53d547beb9f015846f956c758f5d0621ce072c8ad91e05b1"
+        },
+        {
+          "path": "brot_de_march/b2_v1.glsl",
+          "sha256": "42ac96866d3b006560b557e06054aa71d143ce0183ae9d6e5d7de16a09e270dd"
+        },
+        {
+          "path": "brot_de_march/b2_vectors.json",
+          "sha256": "fbbcd85f8c0c1d2a94161c29b7191b9d369a0ad10474ce07368a6af724495da2"
+        },
+        {
+          "path": "brot_de_march/b2_vectors.mjs",
+          "sha256": "381c37a1db105e4624962f2ab90183dbd9ba9ba55089f264525ab783a20e6478"
+        },
+        {
+          "path": "brot_de_march/conform_glsl.mjs",
+          "sha256": "d0d204a592eb80753d1546667cc8c27ad1bf362a37e08cc779e48926efd13566"
+        },
+        {
+          "path": "brot_de_march/reference.py",
+          "sha256": "02c368a9ffa8071bdb97a190e630efdfc9720f0ff6d3425d7f14c44abee525f8"
+        },
+        {
+          "path": "brot_de_march/v1.glsl",
+          "sha256": "4dc61702addbd4d870d5995db2c30f8774a26530325d7b5c841b67f75c952977"
+        },
+        {
+          "path": "brot_de_march/vectors.json",
+          "sha256": "3d185cf612f2a2c0c6c918cddeeafb5ea3133f4a0c4539bfeae12a0a5394de41"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] Julia carries +dc (the Mandelbrot derivative): expected FAIL, got FAIL",
+            "[ok ] Julia normal carries +dc: expected FAIL, got FAIL",
+            "[ok ] beta seed swapped (cos on e1, sin on e2): expected FAIL, got FAIL",
+            "[ok ] w offset along the section instead of across it: expected FAIL, got FAIL",
+            "[ok ] hit tested on the directional DE: expected FAIL, got FAIL",
+            "[ok ] leash ignored (pure directional step): expected FAIL, got FAIL",
+            "[ok ] derivative transposed (square map): expected FAIL, got FAIL",
+            "[ok ] Bristorian square in the quaternion map: expected FAIL, got FAIL",
+            "[ok ] brackets exchanged (cube maps): expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "vectors.json",
+          "script": "reference.py",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "none",
+          "selftest_lines": []
+        },
+        {
+          "face": "b2_v1.glsl",
+          "script": "b2_conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL B2 PASS: 72 field/normal probes, 36 rays, four planted faults detected"
+          ],
+          "selftest": "PASS (four planted faults fail in the same run)"
+        }
+      ]
+    },
+    {
+      "id": "c_selector",
+      "version": "v1",
+      "files": [
+        {
+          "path": "c_selector/conform.mjs",
+          "sha256": "e02fee571e87725520db5604a2812ccc3a88d0f31869f6a605a3d7a99b34b9ca"
+        },
+        {
+          "path": "c_selector/v1.js",
+          "sha256": "ea5c1125c2935b0d8110ca7d6d5e757eaa22279ed7c33e371d3e0c2ef1b30446"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [],
+          "selftest": "none",
+          "selftest_lines": []
+        }
+      ]
+    },
+    {
+      "id": "chi_selector",
+      "version": "v1",
+      "files": [
+        {
+          "path": "chi_selector/conform.mjs",
+          "sha256": "5576063ce030d1982f2c1706056ecb34dda5a54ec39f12d268b5318c3f387c10"
+        },
+        {
+          "path": "chi_selector/v1.js",
+          "sha256": "a7aa69ac9a2e6bd39a836f3dd3174110ff500c310245cb36d8bfa43a79abc5e2"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.js as shipped: expected PASS, got PASS",
+            "[ok ] maps collapsed (R = L): expected FAIL, got FAIL",
+            "[ok ] slice sign slip (e1 flipped): expected FAIL, got FAIL",
+            "[ok ] Re and s exchanged: expected FAIL, got FAIL"
+          ]
+        }
+      ]
+    }
+  ],
+  "licence": {
+    "code": "MIT",
+    "data": "CC0-1.0",
+    "text": "CC-BY-4.0",
+    "attribution": "Bristorbrot / Doug Bristor, bristorbrot.org",
+    "attribution_required": false
+  },
+  "notes": []
+}
