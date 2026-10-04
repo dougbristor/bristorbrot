@@ -1,13 +1,15 @@
 # core
 
-The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.
+The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.
 
 | block | what it is | needs | faces |
 |---|---|---|---|
 | `bristor_product` | The Bristorian product for any n: mul, square and the Jacobian-vector product, with fast fixed-size paths for n = 2, 3 | — | v1.glsl, v1.js, v1.py |
 | `bristor_cube` | The two cubes, (zz)z and z(zz), and their derivatives, composed on bristor_product | bristor_product | v1.glsl, v1.js, v1.py |
 | `quaternion_product` | The Hamilton product (mul, square, Jv), for comparing quaternion sets with Bristorian ones | bristor_product | v1.glsl, v1.js, v1.py |
-| `brot_de_march` | GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above, plus a B2 variant | bristor_product, bristor_cube, quaternion_product | v1.glsl |
+| `brot_de_march` | GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above (b_brot, chi_brot, q², q³), with an optional mist film, plus a B2 variant | bristor_product, bristor_cube, quaternion_product | v1.glsl |
+| `bdm_shadow` | Shadow from a key light on a marched surface: a live last-step estimate, and hard samples whose running mean is the true area light | bristor_product, bristor_cube, quaternion_product, brot_de_march | v1.glsl, v1.js |
+| `edge_post` | One post pass, no new rays: FXAA-style smoothing applied only to edges in the geometry, the shading, or both | — | v1.glsl |
 | `c_selector` | Interactive picker for the Julia constant C on the quadratic map | — | v1.js |
 | `chi_selector` | The C picker for the cubic maps: escape-time slices of the cubic Mandelbrot set | bristor_product, bristor_cube, c_selector | v1.js |
 
@@ -29,6 +31,11 @@ cd core/quaternion_product && node conform_glsl.mjs v1.glsl
 cd core/brot_de_march && node conform_glsl.mjs v1.glsl
 cd core/brot_de_march && python3 reference.py
 cd core/brot_de_march && node b2_conform.mjs
+cd core/bdm_shadow && node conform.mjs ./v1.js
+cd core/bdm_shadow && node conform_glsl.mjs v1.glsl
+cd core/bdm_shadow && python3 reference.py
+cd core/edge_post && node conform_glsl.mjs v1.glsl
+cd core/edge_post && python3 reference.py
 cd core/c_selector && node conform.mjs ./v1.js
 cd core/chi_selector && node conform.mjs ./v1.js
 ```

@@ -1,12 +1,38 @@
 {
   "title": "Bristorbrot core blocks",
-  "intro": "The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.",
+  "intro": "The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.",
   "blocks": [
-    {"id": "bristor_product",    "what": "The Bristorian product for any n: mul, square and the Jacobian-vector product, with fast fixed-size paths for n = 2, 3"},
-    {"id": "bristor_cube",       "what": "The two cubes, (zz)z and z(zz), and their derivatives, composed on bristor_product"},
-    {"id": "quaternion_product", "what": "The Hamilton product (mul, square, Jv), for comparing quaternion sets with Bristorian ones"},
-    {"id": "brot_de_march",      "what": "GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above, plus a B2 variant"},
-    {"id": "c_selector",         "what": "Interactive picker for the Julia constant C on the quadratic map"},
-    {"id": "chi_selector",       "what": "The C picker for the cubic maps: escape-time slices of the cubic Mandelbrot set"}
+    {
+      "id": "bristor_product",
+      "what": "The Bristorian product for any n: mul, square and the Jacobian-vector product, with fast fixed-size paths for n = 2, 3"
+    },
+    {
+      "id": "bristor_cube",
+      "what": "The two cubes, (zz)z and z(zz), and their derivatives, composed on bristor_product"
+    },
+    {
+      "id": "quaternion_product",
+      "what": "The Hamilton product (mul, square, Jv), for comparing quaternion sets with Bristorian ones"
+    },
+    {
+      "id": "brot_de_march",
+      "what": "GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above (b_brot, chi_brot, q², q³), with an optional mist film, plus a B2 variant"
+    },
+    {
+      "id": "bdm_shadow",
+      "what": "Shadow from a key light on a marched surface: a live last-step estimate, and hard samples whose running mean is the true area light"
+    },
+    {
+      "id": "edge_post",
+      "what": "One post pass, no new rays: FXAA-style smoothing applied only to edges in the geometry, the shading, or both"
+    },
+    {
+      "id": "c_selector",
+      "what": "Interactive picker for the Julia constant C on the quadratic map"
+    },
+    {
+      "id": "chi_selector",
+      "what": "The C picker for the cubic maps: escape-time slices of the cubic Mandelbrot set"
+    }
   ]
 }

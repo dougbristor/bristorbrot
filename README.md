@@ -7,10 +7,11 @@ different algebra, and they extend to any dimension. 4-D is a render limit, not 
 This repository has two parts:
 
 - **`core/`**: the reusable code, for other developers. The Bristorian product, the maps built on it, a
-  distance-estimate ray marcher and the C pickers. Each block has JavaScript, Python and/or GLSL faces,
+  distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block has JavaScript, Python and/or GLSL faces,
   its test vectors, and the scripts that check every face against them. Start at [`core/README.md`](core/README.md).
-- **`viewers/brot_viewer/`**: a simple player built only from `core/`. b_brot, chi_brot ((zz)z and z(zz))
-  and the quaternion sets for comparison, each as Mandelbrot and Julia, with the matching C picker.
+- **`viewers/brot_viewer/`**: a simple player built only from `core/`. b_brot (B²), chi_brot (B³, both
+  brackets (zz)z and z(zz)) and the quaternion sets q² and q³ for comparison, each as Mandelbrot and Julia, with the
+  matching C picker. Soft shadows that refine to a true area light while the view is still, edge smoothing, and mist.
 
 ## Run the player
 
@@ -19,7 +20,7 @@ server and open it in a browser with WebGL2:
 
 ```
 python3 -m http.server 8000
-# then open http://localhost:8000/packs/brot_viewer/v2/
+# then open http://localhost:8000/packs/brot_viewer/v3/
 ```
 
 ## How it is put together
@@ -49,6 +50,8 @@ Packs so far:
 - `packs/brot_viewer/v1`: the first player (2026-10-03).
 - `packs/brot_viewer/v2`: the fast fixed-size product for n = 2, 3, the B2 variant of the marcher, and a
   tighter Fine hit floor (2026-10-04).
+- `packs/brot_viewer/v3`: q³, shadows with still refine, a light you can move, body spin (shift-drag), edge smoothing
+  and mist, from insights' shadow lab (2026-10-04). Renders pixel-identical to the lab at the same settings.
 - `packs/de_ray/v1`: steps 0–1 of the story "The life of one ray": what these numbers are, and how
   to square one and take its Jacobian, with the product they rely on.
 
@@ -56,7 +59,7 @@ Packs so far:
 
 ```
 python3 tools/build_pack.py --core
-python3 tools/build_pack.py --viewer brot_viewer --version v3
+python3 tools/build_pack.py --viewer brot_viewer --version v4
 python3 tools/build_pack.py de_ray --steps 0-1 --version v2
 ```
 

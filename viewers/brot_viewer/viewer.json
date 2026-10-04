@@ -1,7 +1,32 @@
 {
-  "title": "Brot Viewer: b_brot, chi_brot and the q-sets, Mandelbrot and Julia",
-  "glue": ["index.html", "app.js", "render.js", "view.glsl"],
-  "blocks": ["bristor_product", "bristor_cube", "brot_de_march", "c_selector", "chi_selector", "quaternion_product"],
-  "faults": ["bracket", "quaternion"],
-  "credits": ["Doug Bristor", "caro", "insights", "git"]
+  "title": "Brot Viewer: b_brot, chi_brot and the quaternion sets q\u00b2 and q\u00b3, Mandelbrot and Julia, with shadows, still refine, edge smoothing and mist",
+  "glue": [
+    "index.html",
+    "app.js",
+    "render.js",
+    "view.glsl",
+    "post.glsl"
+  ],
+  "blocks": [
+    "bristor_product",
+    "bristor_cube",
+    "brot_de_march",
+    "c_selector",
+    "chi_selector",
+    "quaternion_product",
+    "bdm_shadow",
+    "edge_post"
+  ],
+  "faults": [
+    "bracket",
+    "quaternion",
+    "spin",
+    "shadow"
+  ],
+  "credits": [
+    "Doug Bristor",
+    "caro",
+    "insights",
+    "git"
+  ]
 }

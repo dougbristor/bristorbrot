@@ -1,6 +1,6 @@
 {
   "core": "Bristorbrot core blocks",
-  "built": "2026-10-04T09:43:29Z",
+  "built": "2026-10-04T15:42:15Z",
   "blocks": [
     {
       "id": "bristor_product",
@@ -295,19 +295,19 @@
         },
         {
           "path": "brot_de_march/conform_glsl.mjs",
-          "sha256": "d0d204a592eb80753d1546667cc8c27ad1bf362a37e08cc779e48926efd13566"
+          "sha256": "6038284f2b0c6a86d1b8861edb92c800f0c8dc60d198ba1ba2aa75fd4d3b41ee"
         },
         {
           "path": "brot_de_march/reference.py",
-          "sha256": "02c368a9ffa8071bdb97a190e630efdfc9720f0ff6d3425d7f14c44abee525f8"
+          "sha256": "912bb3e49764cf3411ccf5cef37df8e7df2a5a43c68da83919699e6c866ac3fc"
         },
         {
           "path": "brot_de_march/v1.glsl",
-          "sha256": "4dc61702addbd4d870d5995db2c30f8774a26530325d7b5c841b67f75c952977"
+          "sha256": "9971a1a67402a4c814c576ba5581308eb527577a00c3676b80505e49e0cbcd28"
         },
         {
           "path": "brot_de_march/vectors.json",
-          "sha256": "3d185cf612f2a2c0c6c918cddeeafb5ea3133f4a0c4539bfeae12a0a5394de41"
+          "sha256": "44016791a9c675a9e30d4ac95584f4bd7893c9df07a007840156a68432df8be9"
         }
       ],
       "conformance": [
@@ -329,6 +329,7 @@
             "[ok ] leash ignored (pure directional step): expected FAIL, got FAIL",
             "[ok ] derivative transposed (square map): expected FAIL, got FAIL",
             "[ok ] Bristorian square in the quaternion map: expected FAIL, got FAIL",
+            "[ok ] Bristorian cube in the quaternion cube map: expected FAIL, got FAIL",
             "[ok ] brackets exchanged (cube maps): expected FAIL, got FAIL"
           ]
         },
@@ -350,6 +351,134 @@
             "GLSL B2 PASS: 72 field/normal probes, 36 rays, four planted faults detected"
           ],
           "selftest": "PASS (four planted faults fail in the same run)"
+        }
+      ]
+    },
+    {
+      "id": "bdm_shadow",
+      "version": "v1",
+      "files": [
+        {
+          "path": "bdm_shadow/conform.mjs",
+          "sha256": "982439f80f84623d7fb7e9ebea7d80ddfb614d4775fa9205b984245835857828"
+        },
+        {
+          "path": "bdm_shadow/conform_glsl.mjs",
+          "sha256": "8db2578232d1b8f58acb346f75681c93105d0286425864107f67b9e8d50a1d72"
+        },
+        {
+          "path": "bdm_shadow/reference.py",
+          "sha256": "974bb06fe4768385b536b53f80c66b86576d004dd36e5507ad8a9e3f43f971a5"
+        },
+        {
+          "path": "bdm_shadow/v1.glsl",
+          "sha256": "f63b5c215b0b916bc9e16cf2e6105ea6bcb59d83805b262dd91441a320e96675"
+        },
+        {
+          "path": "bdm_shadow/v1.js",
+          "sha256": "a05f9871edc5c44563219f64f1e15bcf5e44d4b6d0e6fa309e4f7b0f9ea69112"
+        },
+        {
+          "path": "bdm_shadow/vectors.json",
+          "sha256": "9dc3a9eea9663621328092f227bc2bad27406ec4c1383cc9788eab15ce475386"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.js",
+          "script": "conform.mjs",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.js as shipped: expected PASS, got PASS",
+            "[ok ] disk radius not square-rooted (centre-heavy): expected FAIL, got FAIL",
+            "[ok ] disk drawn from the pixel-jitter bases 2, 3: expected FAIL, got FAIL",
+            "[ok ] threshold exponent sign flipped: expected FAIL, got FAIL",
+            "[ok ] light az measured from +x: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] IQ in place of the last-step estimator: expected FAIL, got FAIL",
+            "[ok ] escaped ray read as dark: expected FAIL, got FAIL",
+            "[ok ] no offset along the normal: expected FAIL, got FAIL",
+            "[ok ] light disk ignored (refine): expected FAIL, got FAIL",
+            "[ok ] directional DE instead of scalar: expected FAIL, got FAIL",
+            "[ok ] threshold not softened: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "vectors.json",
+          "script": "reference.py",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "none",
+          "selftest_lines": []
+        }
+      ]
+    },
+    {
+      "id": "edge_post",
+      "version": "v1",
+      "files": [
+        {
+          "path": "edge_post/conform_glsl.mjs",
+          "sha256": "ea46522db8004d8ebbe176da3616accf4a9166f8307ced4e96a8d3ee88b2393a"
+        },
+        {
+          "path": "edge_post/reference.py",
+          "sha256": "ad94845a977de4fec8495caecb1e2796d40b0682e5d8742a353e52fadfe4cd15"
+        },
+        {
+          "path": "edge_post/v1.glsl",
+          "sha256": "a927a9b2d8eeca6d3c860fe729c0e6c05a6d7fae81ac13d4cbdf4d1d6045774b"
+        },
+        {
+          "path": "edge_post/vectors.json",
+          "sha256": "17ccb5a4fe22f1675c47e8a6d00e3450775aad5aeb6dd2b8436585cb503446af"
+        }
+      ],
+      "conformance": [
+        {
+          "face": "v1.glsl",
+          "script": "conform_glsl.mjs",
+          "result": "PASS",
+          "summary": [
+            "GLSL PASS"
+          ],
+          "selftest": "PASS (the check fails on every planted mistake)",
+          "selftest_lines": [
+            "[ok ] v1.glsl as shipped: expected PASS, got PASS",
+            "[ok ] blend along the edge normal: expected FAIL, got FAIL",
+            "[ok ] step high byte ignored: expected FAIL, got FAIL",
+            "[ok ] hit change ignored: expected FAIL, got FAIL",
+            "[ok ] both mask as either: expected FAIL, got FAIL",
+            "[ok ] luma threshold 4x too high: expected FAIL, got FAIL",
+            "[ok ] second tap pair dropped: expected FAIL, got FAIL"
+          ]
+        },
+        {
+          "face": "vectors.json",
+          "script": "reference.py",
+          "result": "PASS",
+          "summary": [
+            "PASS"
+          ],
+          "selftest": "none",
+          "selftest_lines": []
         }
       ]
     },
