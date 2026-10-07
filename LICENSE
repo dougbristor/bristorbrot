@@ -1,14 +1,3 @@
-Bristorbrot is released under three licences, by kind of file:
-
-  code (.js .mjs .py .glsl .html)   MIT, below
-  data (vectors .json)              CC0 1.0      https://creativecommons.org/publicdomain/zero/1.0/
-  text (atoms and prose .md)        CC BY 4.0    https://creativecommons.org/licenses/by/4.0/
-
-Attribution is requested but not required for code and data:
-"Bristorbrot / Doug Bristor, bristorbrot.org".
-
-----------------------------------------------------------------------------
-
 MIT License
 
 Copyright (c) 2026 Doug Bristor

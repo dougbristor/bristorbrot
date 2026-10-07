@@ -77,5 +77,7 @@ An existing pack version is never overwritten. Bump the version instead.
 
 ## Licence
 
-Code MIT · vectors and data CC0 · text CC BY 4.0. See [`LICENSE`](LICENSE). Attribution is requested but not
-required: "Bristorbrot / Doug Bristor, bristorbrot.org".
+Code is MIT (see [`LICENSE`](LICENSE)). The test vectors and other data files (`vectors.json`) are CC0 1.0
+(https://creativecommons.org/publicdomain/zero/1.0/), and the text (story atoms and prose `.md`) is CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). Attribution is requested but not required for code and data:
+"Bristorbrot / Doug Bristor, bristorbrot.org".
