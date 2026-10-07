@@ -21,7 +21,8 @@
     "bracket",
     "quaternion",
     "spin",
-    "shadow"
+    "shadow",
+    "mirror"
   ],
   "credits": [
     "Doug Bristor",

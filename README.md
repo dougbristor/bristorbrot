@@ -144,3 +144,7 @@ Attribution is requested for code and data, and required for text:
 “Bristorbrot / Doug Bristor, [bristorbrot.org](https://bristorbrot.org)”.
 Keep the MIT copyright and licence notices when redistributing code. For text, give appropriate
 credit, link to CC BY 4.0 and indicate any changes.
+
+`packs/de_ray/v1/manifest.json` (built 2026-10-02) carries an older single `attribution_required: false` flag.
+That was right for its code and data but not for its CC BY text atoms; the requirements stated here apply.
+Manifests built since 2026-10-07 state them per kind of file.

@@ -143,12 +143,12 @@ function bindOrbit() {
   canvas.onpointerup = canvas.onpointercancel = () => { drag = null; };
   canvas.onpointermove = e => {
     if (!drag) return;
-    if (e.shiftKey) {   // body spin: φ ≡ camera az + φ (light aside), so −dx turns the body with the hand, like the orbit
-      const s = state.spin - (e.clientX - drag[0]) * 0.008;
+    if (e.shiftKey) {   // body spin: φ ≡ camera az + φ (light aside), so +dx turns the body with the hand, like the orbit
+      const s = state.spin + (e.clientX - drag[0]) * 0.008;
       state.spin = s - 2 * Math.PI * Math.round(s / (2 * Math.PI));   // keep in the slider's [−π, π]
       $('spin').value = state.spin; $('spinOut').textContent = deg(state.spin);
     } else {
-      state.az -= (e.clientX - drag[0]) * 0.008;
+      state.az += (e.clientX - drag[0]) * 0.008;   // + since the 10-07 camera fix: the body follows the hand
       state.el = clamp(state.el + (e.clientY - drag[1]) * 0.006, -1.4, 1.4);
     }
     drag = [e.clientX, e.clientY];
@@ -303,6 +303,16 @@ function check() {
   const turned = renderer.pixels('cube_l', { ...sv, shadow: 1, az: sv.az + 0.9, lightAz: sv.lightAz - 0.9 }, 0);
   const spinDiff = diff(spun, turned);
   line(spinDiff < 0.001, `spin: φ 0.9 vs camera +0.9 and light −0.9, ${(100 * spinDiff).toFixed(3)}% of channels differ`);
+  // Picture hand: in a right-handed world, looking along +z, screen right is world −x. Every check above is
+  // mirror-blind, and v3 shipped mirrored until 10-07 (insights' catch, Doug's eye). The b_brot Mandelbrot's real
+  // plane is the classical Mandelbrot set, whose area centroid (real ≈ −0.287) lies on the +x side of the view
+  // centre (−0.5). So from az = 0, el = 0 the silhouette's mass must sit LEFT of the centre column.
+  const hv = { ...frameState({ ...base, set: 'b_brot', julia: false, az: 0, el: 0, axis: true, beta: 0, theta: 0 }), c: SETS.b_brot.c };
+  const hm = renderer.mask('square', hv), W = canvas.width;
+  let sx = 0, cnt = 0;
+  for (let i = 0; i < hm.length; i++) if (hm[i]) { sx += i % W; cnt++; }
+  const mass = cnt ? sx / cnt - (W - 1) / 2 : 0;
+  line(cnt > 0 && mass < -0.01 * W, `picture hand: b_brot Mandelbrot from +z, mass ${Math.abs(mass).toFixed(1)} px ${mass < 0 ? 'left' : 'right'} of centre (must be left: world +x on screen left)`);
   render();
   return { ok, lines };
 }

@@ -26,7 +26,7 @@ const HEAD = '#version 300 es\nprecision highp float;\nprecision highp int;\n';
 
 // Faults, used only by the build gate to prove check() can fail: 'bracket' wires z(zz) to the (zz)z bricks,
 // 'quaternion' wires the q maps to the Bristorian square and cube, 'spin' leaves the light out of the body frame,
-// 'shadow' never sends the shadow switch.
+// 'shadow' never sends the shadow switch, 'mirror' draws the picture mirrored (the pre-10-07 camera).
 const FAULTS = { bracket: { cube_r: 'cube_l' }, quaternion: { qsquare: 'square', qcube: 'cube_l' } };
 
 export async function createRenderer(canvas, { fault = null } = {}) {
@@ -132,8 +132,10 @@ export async function createRenderer(canvas, { fault = null } = {}) {
   function camera({ az, el, dist, target }) {
     const f = [-Math.cos(el) * Math.sin(az), -Math.sin(el), Math.cos(el) * Math.cos(az)];
     const pos = target.map((x, k) => x - dist * f[k]);
-    const r = normalize([f[2], 0, -f[0]]);                  // up0 × forward, up0 = (0, 1, 0)
-    const u = [f[1] * r[2] - f[2] * r[1], f[2] * r[0] - f[0] * r[2], f[0] * r[1] - f[1] * r[0]];
+    // Screen right = forward × up0, so right × up = −forward: a right-handed picture. Until 10-07 this was up0 × forward,
+    // which drew every set mirrored left-right (insights' catch, Doug's eye); fault 'mirror' restores that for the gate.
+    const r = fault === 'mirror' ? normalize([f[2], 0, -f[0]]) : normalize([-f[2], 0, f[0]]);
+    const u = fault === 'mirror' ? cross(f, r) : cross(r, f);   // +y either way
     return { pos, mat: [...r, ...u, ...f] };
   }
 
@@ -260,6 +262,10 @@ export async function createRenderer(canvas, { fault = null } = {}) {
   }
 
   return { draw, accumulate, pixels, mask, bounded, canAccumulate: !!accFloat, maps: Object.keys(MAPS) };
+}
+
+function cross(a, b) {
+  return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 }
 
 function normalize(v) {
