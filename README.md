@@ -1,5 +1,10 @@
 # Bristorbrot
 
+![b_brot Julia set, C = (-0.7, -0.35, 0.05, 0), rendered in brot_viewer v3 with soft shadows refined to an area light](docs/brot_viewer_v3.png)
+
+*b_brot (z² + c) Julia set at C = (−0.7, −0.35, 0.05, 0), β = 27°, in brot_viewer v3: 64 refine samples, area-light
+shadows, edge smoothing. Rendered by the shipped pack, not retouched.*
+
 Fractals in **Bristorian** algebra. Its numbers, **imordials**, are ranked imaginaries: multiplication keeps
 the order of the ranks and breaks the magnitude (|zw| ≠ |z||w|). Its product carries all three structural
 defects: it is non-commutative, non-associative and non-alternative. Quaternions have only the first, and even
