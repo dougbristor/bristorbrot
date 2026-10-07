@@ -21,7 +21,8 @@
   .sub { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
   fieldset { border: 0; border-top: 1px solid var(--line); margin: 0; padding: 10px 0 6px; }
   legend { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 0 6px 0 0; }
-  label { display: grid; grid-template-columns: 70px 1fr auto; align-items: center; gap: 8px; margin: 6px 0; }
+  label { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 6px 0; }
+  label > select { width: 100%; min-width: 0; }
   select, input[type=number], button { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 5px; padding: 4px 6px; font: inherit; }
   input[type=range] { width: 100%; accent-color: var(--accent); }
   output { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px; text-align: right; }
@@ -67,7 +68,7 @@
 
   <fieldset>
     <legend>Light</legend>
-    <label>Shadow <select id="shadow"><option value="0">off</option><option value="1">soft (refines to area light)</option></select></label>
+    <label>Shadow <select id="shadow" title="Soft shadow while you move; refines to a true area-light shadow when the view is still"><option value="0">off</option><option value="1">soft</option></select></label>
     <label id="lightRow">Light az <input id="lightAz" type="range" min="-3.1416" max="3.1416" step="0.01"><output id="lightAzOut"></output></label>
     <label id="lightElRow">Light el <input id="lightEl" type="range" min="-0.3" max="1.55" step="0.01"><output id="lightElOut"></output></label>
     <label id="lightSizeRow">Light size <input id="lightSize" type="range" min="0.005" max="0.3" step="0.005"><output id="lightSizeOut"></output></label>
@@ -77,7 +78,7 @@
   <fieldset>
     <legend>Finish</legend>
     <label>Still refine <select id="refine"><option value="0">off</option><option value="16">16 samples</option><option value="64">64 samples</option><option value="256">256 samples</option></select></label>
-    <label>Edge smoothing <select id="post"><option value="off">off</option><option value="luma">visible edges</option><option value="steps">geometry edges</option><option value="both">both (recommended)</option><option value="all">every pixel</option></select></label>
+    <label>Edge smoothing <select id="post" title="Smooths edges after the render. Both (geometry edges that are also visible) is recommended"><option value="off">off</option><option value="luma">visible edges</option><option value="steps">geometry edges</option><option value="both">both</option><option value="all">every pixel</option></select></label>
     <label>Mist <input id="mist" type="range" min="0" max="1.5" step="0.01"><output id="mistOut"></output></label>
     <label>Mist mode <select id="mistMode"><option value="edge">edge (near misses)</option><option value="coat">coat (film)</option><option value="edgecoat">edge + coat dusting</option></select></label>
     <label id="mistCoatRow">Coat dusting <input id="mistCoat" type="range" min="0" max="1.5" step="0.01"><output id="mistCoatOut"></output></label>
