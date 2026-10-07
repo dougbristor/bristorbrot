@@ -47,11 +47,8 @@ tools/check_viewer.mjs         runs a viewer's own check() headless, as shipped 
 
 Packs so far:
 
-- `packs/brot_viewer/v1`: the first player (2026-10-03).
-- `packs/brot_viewer/v2`: the fast fixed-size product for n = 2, 3, the B2 variant of the marcher, and a
-  tighter Fine hit floor (2026-10-04).
-- `packs/brot_viewer/v3`: q³, shadows with still refine, a light you can move, body spin (shift-drag), edge smoothing
-  and mist, from insights' shadow lab (2026-10-04). Renders pixel-identical to the lab at the same settings.
+- `packs/brot_viewer/v3`: the player. b_brot, chi_brot, q² and q³ with shadows that refine to a true area light,
+  a light you can move, body spin (shift-drag), edge smoothing and mist (2026-10-04).
 - `packs/de_ray/v1`: steps 0–1 of the story "The life of one ray": what these numbers are, and how
   to square one and take its Jacobian, with the product they rely on.
 
