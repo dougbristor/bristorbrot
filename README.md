@@ -1,8 +1,12 @@
 # Bristorbrot
 
 Fractals in **Bristorian** algebra. Its numbers, **imordials**, are ranked imaginaries: multiplication keeps
-the order of the ranks and breaks the magnitude. They share the i/j/k symbols with quaternions but are a
-different algebra, and they extend to any dimension. 4-D is a render limit, not an algebraic one.
+the order of the ranks and breaks the magnitude (|zw| ≠ |z||w|). Its product carries all three structural
+defects: it is non-commutative, non-associative and non-alternative. Quaternions have only the first, and even
+the octonions never reach the third. Non-associativity is why chi_brot's two cubes, (zz)z and z(zz), are different sets. It
+also has a hand: the algebra is not the same as its own mirror image. Imordials share the i/j/k symbols with
+quaternions but are a different algebra, and they extend to any dimension. 4-D is a render limit, not an
+algebraic one.
 
 This repository has two parts:
 
