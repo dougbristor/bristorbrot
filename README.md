@@ -13,14 +13,16 @@ Rendered by the shipped v3 player with 64 refinement samples, sampled area-light
 
 ## Try the viewer
 
-From the repository root, start any static web server. For example, with Python 3:
+**Online:** [bristorbrot.org/beta/viewer](https://bristorbrot.org/beta/viewer/) runs this v3 player in any browser with
+WebGL2.
+
+**Locally:** the built player in `packs/brot_viewer/v3/` is self-contained, with no build step and no CodeT source
+tree. From the repository root, start any static web server, for example with Python 3:
 
 ```sh
 python3 -m http.server 8000
+# then open http://localhost:8000/packs/brot_viewer/v3/ in a browser with WebGL2
 ```
-
-Open [brot_viewer v3](http://localhost:8000/packs/brot_viewer/v3/) in a browser with WebGL2.
-The built player is self-contained; running it needs no build step or CodeT source tree.
 
 - Choose **Formula** to compare b_brot (`z² + c`), the two chi_brot cubes (`(zz)z + c` and
   `z(zz) + c`), and the quaternion maps `q² + c` and `q³ + c`.
