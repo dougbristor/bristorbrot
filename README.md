@@ -1,5 +1,7 @@
 # Bristorbrot
 
+**Website: [bristorbrot.org](https://bristorbrot.org)**: the project home, with the algebra explained and a gallery.
+
 Explore quadratic and cubic fractals in **Bristorian algebra**, and compare them with quaternion
 fractals. Bristorian numbers, called **imordials**, have ranked imaginary units. Their multiplication
 depends on both operand order and brackets: `(zz)z` and `z(zz)` can give different answers.
@@ -131,6 +133,6 @@ Code is MIT; see [`LICENSE`](LICENSE). Test vectors and other data files are
 files are [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Attribution is requested for code and data, and required for text:
-“Bristorbrot / Doug Bristor, bristorbrot.org”.
+“Bristorbrot / Doug Bristor, [bristorbrot.org](https://bristorbrot.org)”.
 Keep the MIT copyright and licence notices when redistributing code. For text, give appropriate
 credit, link to CC BY 4.0 and indicate any changes.
