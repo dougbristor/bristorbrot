@@ -1,6 +1,6 @@
 {
   "core": "Bristorbrot core blocks",
-  "built": "2026-10-04T15:42:15Z",
+  "built": "2026-10-07T09:15:30Z",
   "blocks": [
     {
       "id": "bristor_product",
@@ -543,7 +543,16 @@
     "data": "CC0-1.0",
     "text": "CC-BY-4.0",
     "attribution": "Bristorbrot / Doug Bristor, bristorbrot.org",
-    "attribution_required": false
+    "attribution_required": {
+      "code": false,
+      "data": false,
+      "text": true
+    },
+    "requirements": {
+      "code": "keep the MIT copyright and licence notice",
+      "data": "none (CC0); attribution requested",
+      "text": "credit, a link to CC BY 4.0, and an indication of any changes"
+    }
   },
   "notes": []
 }

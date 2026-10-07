@@ -1,6 +1,6 @@
 {
   "title": "Bristorbrot core blocks",
-  "intro": "The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.",
+  "intro": "Reusable algebra and rendering code for Bristorian and quaternion fractals. Bristorian numbers (imordials) have ranked imaginary units: i*j = j and j*i = -i. Arrays are rank-indexed (real, e1, e2, ...). The blocks provide the product, quadratic and cubic maps, derivative operations, a distance-estimate ray marcher, shadows, edge smoothing and Julia C pickers. Each block includes JavaScript, Python and/or GLSL implementations and its own conformance checks. quaternion_product supplies the Hamilton product for comparison. The ray marcher uses finite iteration budgets and heuristic distance estimates; it does not certify the infinite boundary.",
   "blocks": [
     {
       "id": "bristor_product",
@@ -16,11 +16,11 @@
     },
     {
       "id": "brot_de_march",
-      "what": "GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above (b_brot, chi_brot, q², q³), with an optional mist film, plus a B2 variant"
+      "what": "GLSL distance-estimate ray marcher for b_brot, both chi_brot brackets, q² and q³, as Mandelbrot or Julia, with optional mist and a three-component B2 variant (b2_v1.glsl)"
     },
     {
       "id": "bdm_shadow",
-      "what": "Shadow from a key light on a marched surface: a live last-step estimate, and hard samples whose running mean is the true area light"
+      "what": "Key-light shadows: a live last-step estimate and a running mean of hard shadow rays sampled across a light disk"
     },
     {
       "id": "edge_post",

@@ -1,92 +1,136 @@
 # Bristorbrot
 
-![b_brot Julia set, C = (-0.7, -0.35, 0.05, 0), rendered in brot_viewer v3 with soft shadows refined to an area light](docs/brot_viewer_v3.png)
+Explore quadratic and cubic fractals in **Bristorian algebra**, and compare them with quaternion
+fractals. Bristorian numbers, called **imordials**, have ranked imaginary units. Their multiplication
+depends on both operand order and brackets: `(zz)z` and `z(zz)` can give different answers.
 
-*b_brot (z² + c) Julia set at C = (−0.7, −0.35, 0.05, 0), β = 27°, in brot_viewer v3: 64 refine samples, area-light
-shadows, edge smoothing. Rendered by the shipped pack, not retouched.*
+![b_brot Julia set, C = (-0.7, -0.35, 0.05, 0), rendered in brot_viewer v3](docs/brot_viewer_v3.png)
 
-Fractals in **Bristorian** algebra. Its numbers, **imordials**, are ranked imaginaries: multiplication keeps
-the order of the ranks and breaks the magnitude (|zw| ≠ |z||w|). Its product carries all three structural
-defects: it is non-commutative, non-associative and non-alternative. Quaternions have only the first, and even
-the octonions never reach the third. Non-associativity is why chi_brot's two cubes, (zz)z and z(zz), are different sets. It
-also has a hand: the algebra is not the same as its own mirror image. Imordials share the i/j/k symbols with
-quaternions but are a different algebra, and they extend to any dimension. 4-D is a render limit, not an
-algebraic one.
+*b_brot Julia set, `z² + c`, at C = (−0.7, −0.35, 0.05, 0), β = 27°.
+Rendered by the shipped v3 player with 64 refinement samples, sampled area-light shadows and edge smoothing; not retouched.*
 
-This repository has two parts:
+## Try the viewer
 
-- **`core/`**: the reusable code, for other developers. The Bristorian product, the maps built on it, a
-  distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block has JavaScript, Python and/or GLSL faces,
-  its test vectors, and the scripts that check every face against them. Start at [`core/README.md`](core/README.md).
-- **`viewers/brot_viewer/`**: a simple player built only from `core/`. b_brot (B²), chi_brot (B³, both
-  brackets (zz)z and z(zz)) and the quaternion sets q² and q³ for comparison, each as Mandelbrot and Julia, with the
-  matching C picker. Soft shadows that refine to a true area light while the view is still, edge smoothing, and mist.
+From the repository root, start any static web server. For example, with Python 3:
 
-## Run the player
-
-The built player in `packs/brot_viewer/<version>/` is self-contained. Serve the repository with any static
-server and open it in a browser with WebGL2:
-
-```
+```sh
 python3 -m http.server 8000
-# then open http://localhost:8000/packs/brot_viewer/v3/
 ```
 
-## How it is put together
+Open [brot_viewer v3](http://localhost:8000/packs/brot_viewer/v3/) in a browser with WebGL2.
+The built player is self-contained; running it needs no build step or CodeT source tree.
 
-Everything here is **assembled, never retyped**. The render and algebra code comes from CodeT blocks, each
-face used unchanged, and the text comes from story atoms. Each block's own conformance checks run on every
-build, against the copy that ships rather than the source. If something is wrong in a block, it is fixed in
-the block and rebuilt here, not patched in the copy. Scaffolding such as file I/O, manifests and the build
-tool is ordinary code, because there is no block for it to come from.
+- Choose **Formula** to compare b_brot (`z² + c`), the two chi_brot cubes (`(zz)z + c` and
+  `z(zz) + c`), and the quaternion maps `q² + c` and `q³ + c`.
+- Switch **Variant** between Mandelbrot and Julia. In Julia mode, **Pick C** opens the matching
+  parameter slice; for chi_brot, **both brackets** highlights their finite escape-time differences.
+- Drag to orbit, shift-drag to spin the body, and use the wheel to zoom. Let the view settle to
+  accumulate refinement samples. **Copy link** saves the current view in a URL.
 
-```
-core/                          the reusable blocks, rebuilt in place (git history is their version record)
-    README.md                  what each block is, and the command that checks each face
-    <block>/                   faces (v1.js, v1.py, v1.glsl), vectors.json, conformance scripts
-core.json                      which blocks core/ holds, with a one-line description of each
-viewers/<name>/                a viewer's own glue: viewer.json, index.html, *.js, *.glsl
-packs/<name>/<version>/        a built, frozen, self-contained snapshot
-    manifest.json              what went in: files and their sha256, conformance results, checks, licence
-    code/<block>/              the blocks it uses, as they were at build time
-    atoms/*.md                 story packs only: the text atoms
-tools/build_pack.py            builds core/ and the packs
-tools/check_viewer.mjs         runs a viewer's own check() headless, as shipped and with each fault switch
+## What the algebra changes
+
+Imordials use the familiar `i`, `j`, `k` symbols, but multiply by a different rule. For any number
+`n` of imaginary units, with `1` as the identity and multiplication extended bilinearly:
+
+```text
+e_a · e_a = −1
+e_a · e_b = sgn(b − a) · e_b    (a ≠ b)
 ```
 
-Packs so far:
+The product returns a signed copy of its right-hand factor. In rank order, `i·j = j` and
+`j·i = −i`. Arrays use `(real, e1, e2, …)`; the viewer uses `(real, i, j, k)` and displays
+three-dimensional sections of the four-dimensional iteration.
 
-- `packs/brot_viewer/v3`: the player. b_brot, chi_brot, q² and q³ with shadows that refine to a true area light,
-  a light you can move, body spin (shift-drag), edge smoothing and mist (2026-10-04).
-- `packs/de_ray/v1`: steps 0–1 of the story "The life of one ray": what these numbers are, and how
-  to square one and take its Jacobian, with the product they rely on.
+With two or more imaginary units, the algebra has all three structural defects: it is
+non-commutative, non-associative and non-alternative. Quaternions have only the first; octonions
+stop before the third. These are exact properties of the rule. For example, even a repeated factor
+does not restore associativity: `(i·i)·j = −j`, while `i·(i·j) = j`.
+The cubic maps differ too: at `z = i + j`, `(zz)z = −3i − 3j`, while `z(zz) = −i − j`.
+The Euclidean norm is not multiplicative in general: this same `z` has `|z|² = 2`, but `|z²| = √6`.
 
-## Build
+Reversing multiplication gives the **opposite algebra**, `a ∘ b = b · a`. It has exactly the
+same squares, so a `z² + c` image cannot distinguish the two products; general products and
+cubic brackets can. See [The square cannot see the hand; the product can](packs/de_ray/v1/atoms/conv.hand.md).
 
+The algebra extends beyond four dimensions. The bundled viewer renders four-dimensional maps;
+JavaScript and Python in `bristor_product` support arbitrary `n`. The rendered surfaces use
+finite iteration budgets and heuristic distance estimates, not certified distances to the infinite
+fractal boundary. Still refinement samples the light and pixels; it does not certify the geometry.
+
+## Reuse the code
+
+- **[`core/`](core/README.md)** contains the Bristorian product and cubic maps, quaternion comparison
+  maps, a distance-estimate ray marcher, shadows, edge smoothing and C pickers. Each block has
+  JavaScript, Python and/or GLSL implementations with its own conformance checks.
+- **`viewers/brot_viewer/`** contains the viewer's controls, camera and rendering glue. Its algebra
+  and rendering blocks come from `core/`; `packs/brot_viewer/v3/` freezes the copies used by this release.
+
+## How it is assembled and checked
+
+The algebra and rendering blocks are copied unchanged from **CodeT**, the project's reusable code
+library. Story packs similarly assemble text atoms. A build runs each block's conformance checks
+against the copy that will ship. Viewer checks must pass as shipped and fail with every declared
+fault switched on. These checks establish the tested behavior; they are not a proof of every
+rendered pixel or every possible input.
+
+Fix a reusable block in its source and rebuild, rather than patching a generated copy. Viewer glue,
+file I/O, manifests and build tooling are ordinary code.
+
+```text
+core/                          reusable blocks; rebuilt in place
+    README.md                  block descriptions and check commands
+    <block>/                   implementations, reference data and conformance scripts
+core.json                      block selection and descriptions for core/
+viewers/<name>/                viewer glue: viewer.json, index.html, *.js, *.glsl
+packs/<name>/<version>/        frozen, self-contained build
+    manifest.json              file hashes, conformance results, checks and licences
+    code/<block>/              block copies used by this build
+    atoms/*.md                 text atoms (story packs only)
+tools/build_pack.py            assembles core/ and packs
+tools/check_viewer.mjs         runs a viewer's checks headlessly, including its fault switches
 ```
+
+Included packs:
+
+- **`packs/brot_viewer/v3/`**: quadratic and cubic Bristorian and quaternion fractals, with movable
+  light, sampled area-light shadows, body spin, edge smoothing and mist (2026-10-04).
+- **`packs/de_ray/v1/`**: steps 0–1 of *The life of one ray*: the number system, its square and
+  Jacobian, and the product they use.
+
+## Build from the source tree
+
+Rebuilding requires the sibling CodeT source tree; story builds also require the story atoms and
+their lint tool. These are not included in this repository. The shipped conformance scripts can
+run independently; Python checks need Python 3, JavaScript checks use Node.js 22.7 or later, and GPU/viewer
+checks also need Playwright and a WebGL2-capable Chrome or Chromium. See [the core check commands](core/README.md#checking-a-block).
+
+```sh
 python3 tools/build_pack.py --core
 python3 tools/build_pack.py --viewer brot_viewer --version v4
 python3 tools/build_pack.py de_ray --steps 0-1 --version v2
 ```
 
-Rebuilding needs the CodeT source tree, which is not part of this repository. The conformance checks inside
-`core/` and each pack run on their own. Add `--dry-run` to run every check and write nothing. A build fails, and leaves nothing behind, if any of
-these happen:
+Add `--dry-run` to check temporary copies without installing outputs. A build installs its output
+only after all required checks pass. It fails if:
 
-- a block's conformance check, or its self-test, fails in the built copy;
-- a block has a file the builder does not know how to classify;
-- a block's `requires:` is missing, or a relative import resolves outside the pack (viewers);
-- the viewer's `check()` fails as shipped, or still passes with any of its fault switches on (viewers);
-- a viewer uses a block that `core.json` does not list (core);
-- internal paths or ledger text turn up in what ships;
-- for story packs: the step table disagrees with the atoms' own `step:` fields, an atom depends on one
-  outside the pack, the atoms disagree on the conventions stamp, or the text lint finds a hit.
+- a block's conformance check or declared self-test fails;
+- a block contains an unclassified file, or a required block is missing;
+- a viewer's relative import resolves outside the pack, its check fails as shipped, or a declared
+  fault is not detected;
+- a viewer uses a block absent from `core.json` (when building `core/`);
+- the leak scan finds internal paths or ledger text in the generated output;
+- a story's step table disagrees with its atoms, an atom depends on one outside the selected steps,
+  convention stamps disagree, or text lint fails.
 
-An existing pack version is never overwritten. Bump the version instead.
+Existing pack versions are never overwritten; use a new version for a new build.
 
 ## Licence
 
-Code is MIT (see [`LICENSE`](LICENSE)). The test vectors and other data files (`vectors.json`) are CC0 1.0
-(https://creativecommons.org/publicdomain/zero/1.0/), and the text (story atoms and prose `.md`) is CC BY 4.0
-(https://creativecommons.org/licenses/by/4.0/). Attribution is requested but not required for code and data:
-"Bristorbrot / Doug Bristor, bristorbrot.org".
+Code is MIT; see [`LICENSE`](LICENSE). Test vectors and other data files are
+[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). Story atoms and other prose `.md`
+files are [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Attribution is requested for code and data, and required for text:
+“Bristorbrot / Doug Bristor, bristorbrot.org”.
+Keep the MIT copyright and licence notices when redistributing code. For text, give appropriate
+credit, link to CC BY 4.0 and indicate any changes.

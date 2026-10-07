@@ -1,14 +1,14 @@
 # core
 
-The reusable code behind every Bristorbrot viewer: the Bristorian product and the maps built on it, a distance-estimate ray marcher with its shadow and edge smoothing, and the C pickers. Each block ships the same code in up to three faces (JavaScript, Python, GLSL), its test vectors, and the scripts that check every face against them. Bristorian numbers (imordials) are not quaternions: they share the i/j/k symbols, but the product keeps the order of the ranks and breaks the magnitude. quaternion_product is here as the comparison case.
+Reusable algebra and rendering code for Bristorian and quaternion fractals. Bristorian numbers (imordials) have ranked imaginary units: i*j = j and j*i = -i. Arrays are rank-indexed (real, e1, e2, ...). The blocks provide the product, quadratic and cubic maps, derivative operations, a distance-estimate ray marcher, shadows, edge smoothing and Julia C pickers. Each block includes JavaScript, Python and/or GLSL implementations and its own conformance checks. quaternion_product supplies the Hamilton product for comparison. The ray marcher uses finite iteration budgets and heuristic distance estimates; it does not certify the infinite boundary.
 
 | block | what it is | needs | faces |
 |---|---|---|---|
 | `bristor_product` | The Bristorian product for any n: mul, square and the Jacobian-vector product, with fast fixed-size paths for n = 2, 3 | — | v1.glsl, v1.js, v1.py |
 | `bristor_cube` | The two cubes, (zz)z and z(zz), and their derivatives, composed on bristor_product | bristor_product | v1.glsl, v1.js, v1.py |
 | `quaternion_product` | The Hamilton product (mul, square, Jv), for comparing quaternion sets with Bristorian ones | bristor_product | v1.glsl, v1.js, v1.py |
-| `brot_de_march` | GLSL distance-estimate ray marcher for the Mandelbrot and Julia sets of every map above (b_brot, chi_brot, q², q³), with an optional mist film, plus a B2 variant | bristor_product, bristor_cube, quaternion_product | v1.glsl |
-| `bdm_shadow` | Shadow from a key light on a marched surface: a live last-step estimate, and hard samples whose running mean is the true area light | bristor_product, bristor_cube, quaternion_product, brot_de_march | v1.glsl, v1.js |
+| `brot_de_march` | GLSL distance-estimate ray marcher for b_brot, both chi_brot brackets, q² and q³, as Mandelbrot or Julia, with optional mist and a three-component B2 variant (b2_v1.glsl) | bristor_product, bristor_cube, quaternion_product | v1.glsl |
+| `bdm_shadow` | Key-light shadows: a live last-step estimate and a running mean of hard shadow rays sampled across a light disk | bristor_product, bristor_cube, quaternion_product, brot_de_march | v1.glsl, v1.js |
 | `edge_post` | One post pass, no new rays: FXAA-style smoothing applied only to edges in the geometry, the shading, or both | — | v1.glsl |
 | `c_selector` | Interactive picker for the Julia constant C on the quadratic map | — | v1.js |
 | `chi_selector` | The C picker for the cubic maps: escape-time slices of the cubic Mandelbrot set | bristor_product, bristor_cube, c_selector | v1.js |
@@ -16,31 +16,33 @@ The reusable code behind every Bristorbrot viewer: the Bristorian product and th
 ## Checking a block
 
 Each folder carries its test vectors and the scripts that check every face against them.
-Run them from inside the block folder:
+Run these commands from the repository root (each command keeps its directory change local):
 
 ```
-cd core/bristor_product && python3 conform.py v1.py
-cd core/bristor_product && node conform.mjs ./v1.js
-cd core/bristor_product && node conform_glsl.mjs v1.glsl
-cd core/bristor_cube && python3 conform.py v1.py
-cd core/bristor_cube && node conform.mjs ./v1.js
-cd core/bristor_cube && node conform_glsl.mjs v1.glsl
-cd core/quaternion_product && python3 conform.py v1.py
-cd core/quaternion_product && node conform.mjs ./v1.js
-cd core/quaternion_product && node conform_glsl.mjs v1.glsl
-cd core/brot_de_march && node conform_glsl.mjs v1.glsl
-cd core/brot_de_march && python3 reference.py
-cd core/brot_de_march && node b2_conform.mjs
-cd core/bdm_shadow && node conform.mjs ./v1.js
-cd core/bdm_shadow && node conform_glsl.mjs v1.glsl
-cd core/bdm_shadow && python3 reference.py
-cd core/edge_post && node conform_glsl.mjs v1.glsl
-cd core/edge_post && python3 reference.py
-cd core/c_selector && node conform.mjs ./v1.js
-cd core/chi_selector && node conform.mjs ./v1.js
+(cd core/bristor_product && python3 conform.py v1.py)
+(cd core/bristor_product && node conform.mjs ./v1.js)
+(cd core/bristor_product && node conform_glsl.mjs v1.glsl)
+(cd core/bristor_cube && python3 conform.py v1.py)
+(cd core/bristor_cube && node conform.mjs ./v1.js)
+(cd core/bristor_cube && node conform_glsl.mjs v1.glsl)
+(cd core/quaternion_product && python3 conform.py v1.py)
+(cd core/quaternion_product && node conform.mjs ./v1.js)
+(cd core/quaternion_product && node conform_glsl.mjs v1.glsl)
+(cd core/brot_de_march && node conform_glsl.mjs v1.glsl)
+(cd core/brot_de_march && python3 reference.py)
+(cd core/brot_de_march && node b2_conform.mjs)
+(cd core/bdm_shadow && node conform.mjs ./v1.js)
+(cd core/bdm_shadow && node conform_glsl.mjs v1.glsl)
+(cd core/bdm_shadow && python3 reference.py)
+(cd core/edge_post && node conform_glsl.mjs v1.glsl)
+(cd core/edge_post && python3 reference.py)
+(cd core/c_selector && node conform.mjs ./v1.js)
+(cd core/chi_selector && node conform.mjs ./v1.js)
 ```
 
-`conform_glsl.mjs` needs a headless Chrome with WebGL2 (playwright).
+Python checks need Python 3; use Node.js 22.7 or later for JavaScript checks. GPU checks
+(`conform_glsl.mjs` and `b2_conform.mjs`) also need Playwright and a local
+WebGL2-capable Chrome or installed Playwright Chromium.
 
 This folder is generated by `python3 tools/build_pack.py --core` from the CodeT blocks. Edit the
 blocks, not these copies: the next build replaces them.
