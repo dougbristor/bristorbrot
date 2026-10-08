@@ -1,0 +1,162 @@
+{
+ "checked": [
+  {
+   "id": "P1",
+   "text": "i·j = j, j·i = −i, i·k = k, k·i = −i, j·k = k, k·j = −j, and every unit squares to −1",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "id": "P2",
+   "text": "[i, j] = i·j − j·i = i + j",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "id": "P3",
+   "text": "in B2, i + j is a zero divisor (it multiplies a nonzero number to 0); i − j is not",
+   "ok": true,
+   "detail": "det L(i+j)=0.00e+00, det L(i−j)=2.000, kernel [ 1.  1. -1.]"
+  },
+  {
+   "id": "P4",
+   "text": "(ab)c ≠ a(bc) for 20 of the 64 triples of 1, i, j, k",
+   "ok": true,
+   "detail": "count=20"
+  },
+  {
+   "id": "P5",
+   "text": "not alternative: (xx)w ≠ x(xw), e.g. x = i + j",
+   "ok": true,
+   "detail": "max |(xx)w − x(xw)| over units = 6.000"
+  },
+  {
+   "id": "P6",
+   "text": "not power-associative: (zz)z ≠ z(zz) for a typical z",
+   "ok": true,
+   "detail": "|diff|=0.301"
+  },
+  {
+   "id": "P7",
+   "text": "|zw| ≠ |z||w|: size is not kept (it is in ℂ and the quaternions)",
+   "ok": true,
+   "detail": "|zw|/(|z||w|) ranges 0.088..1.679; |zz|/|z|² ranges 0.511..1.640"
+  },
+  {
+   "id": "P8",
+   "text": "z·z is identical in B and its opposite algebra B^op (factors swapped), so every z² + c picture is hand-blind",
+   "ok": true,
+   "detail": "max diff 0.0e+00"
+  },
+  {
+   "id": "P9",
+   "text": "the cube sees the bracket: (zz)z + c and z(zz) + c draw different sets off the ℂ planes, the same set on them",
+   "ok": true,
+   "detail": "disagreement at 45°: 11.19% of the union; at 0° and 90°: 0.0000%"
+  },
+  {
+   "id": "P10",
+   "text": "reversing the ranks and negating them, φ(e_a) = −e_(n+1−a), is a symmetry of the product (in B2 a reflection, det −1); a plain swap of i and j is not",
+   "ok": true,
+   "detail": "φ error 8.9e-16, plain i↔j swap error 9.987"
+  },
+  {
+   "id": "P11",
+   "text": "exact witness: z = i + j gives z² = −2 − i + j, so |z²|² = 6 while |z|⁴ = 4",
+   "ok": true,
+   "detail": "z² = [-2, -1, 1]"
+  },
+  {
+   "id": "P12",
+   "text": "(1 + i + j)² = −1 + i + 3j: a square CAN point along i + j; what vanishes is the order-sensitive part of the product",
+   "ok": true,
+   "detail": "(1+i+j)² = [-1, 1, 3]"
+  },
+  {
+   "id": "P13",
+   "text": "in B2 the cube's bracket difference is (zz)z − z(zz) = −ab(a + b)(i + j): it always points along i + j",
+   "ok": true,
+   "detail": "max err 7.1e-15"
+  },
+  {
+   "id": "P14",
+   "text": "exactly 2ⁿ − 1 planes through the real axis are closed under squaring (B2: i, j and i − j; i + j is not one)",
+   "ok": true,
+   "detail": "closed ±1/0 directions found: {2: np.int64(3), 3: np.int64(7), 4: np.int64(15)}"
+  },
+  {
+   "id": "P15",
+   "text": "det of the square's derivative at the unit e_a is 4·(−1)^(a−1): neighbouring units have opposite sign, so the square folds between them",
+   "ok": true,
+   "detail": "checked n = 2..8, every a (proved for all n)"
+  },
+  {
+   "id": "S1",
+   "text": "on the slice through 1 and u = cos β·i + sin β·j, u² = −1 + cos β sin β·(j − i)",
+   "ok": true,
+   "detail": "max err 2.2e-16"
+  },
+  {
+   "id": "S2",
+   "text": "at 135° the plane is closed: u² = −1 − u/√2, the rule of the complex number ω = −0.354 + 0.935i (|ω| = 1)",
+   "ok": true,
+   "detail": "angle between 1 and ω = 110.70°"
+  },
+  {
+   "id": "S3",
+   "text": "at 45° (the direction i + j) squaring x + t·u leaks out of the plane by t²(j − i)/2: always, except on the real axis (t = 0)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "id": "S4",
+   "text": "45°: misses 10.2% of the M-set, 1.4% false cover. 135°: misses 13.5%, 20.4% false cover. Controls held.",
+   "ok": true,
+   "detail": "45 0.1021/0.0140  135 0.1352/0.2043  C3 IoU 0.99997"
+  },
+  {
+   "id": "S5",
+   "text": "between 0° and 90° the missed share peaks near 20° and 70° (about 12%), not at 45°; 45° has the least false cover of any tilted slice",
+   "ok": true,
+   "detail": "peak 20° 0.1228; 45° false 0.0140, min over 10..80 0.0140"
+  },
+  {
+   "id": "S6",
+   "text": "at c = −1 the cycle 0 → −1 → 0 attracts in all four dimensions (multiplier exactly 0)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "cited": [
+  {
+   "text": "B ≇ B^op: no invertible linear map turns the product into the opposite algebra (the algebra has a hand)",
+   "kind": "proved",
+   "source": "Gröbner basis = [1] for the anti-isomorphism equations, B2, B3, B4, 2026-07"
+  },
+  {
+   "text": "the only symmetries of the squaring map are identity and reversal",
+   "kind": "proved",
+   "source": "every sign rule of this shape in B3 and B4; general n open, 2026-09"
+  },
+  {
+   "text": "no linear change of coordinates turns (zz)z into z(zz)",
+   "kind": "proved",
+   "source": "B2 and B3, 2026-09"
+  },
+  {
+   "text": "0 is a saddle, not an attractor, on 5.18% of the main cardioid of an in-plane copy of ℂ; 22 parameters where 0 escapes yet a cycle attracts",
+   "kind": "certified",
+   "source": "ball arithmetic + Krawczyk, 2026-09"
+  },
+  {
+   "text": "among all sign rules of this shape, Bristorian exactly minimises the mean-square closure defect",
+   "kind": "proved",
+   "source": "exact closed form, exhaustive up to 5 dimensions, 2026-08"
+  },
+  {
+   "text": "in 3-D (one Julia c), the 134° frame is 3.3× as wrong as 44° and moves as a smoother warp",
+   "kind": "measured",
+   "source": "edge-point tracking, lower bound, 2026-10"
+  }
+ ]
+}
