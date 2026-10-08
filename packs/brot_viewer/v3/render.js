@@ -170,6 +170,7 @@ export async function createRenderer(canvas, { fault = null } = {}) {
     gl.uniform2f(U('uTheta'), Math.sin(st.theta), Math.cos(st.theta));
     gl.uniform1f(U('uW'), st.w);
     gl.uniform1i(U('uAxis'), st.axis ? 1 : 0);
+    gl.uniform1i(U('uJK'), st.jk ? 1 : 0);
     gl.uniform1i(U('uJulia'), st.julia ? 1 : 0);
     gl.uniform1i(U('uIters'), st.iters);
     gl.uniform4fv(U('uC'), st.c);
@@ -250,6 +251,7 @@ export async function createRenderer(canvas, { fault = null } = {}) {
     gl.uniform2f(U('uTheta'), 0, 1);
     gl.uniform1f(U('uW'), 0);
     gl.uniform1i(U('uAxis'), 1);
+    gl.uniform1i(U('uJK'), 0);
     gl.uniform1i(U('uJulia'), 0);
     gl.uniform1i(U('uIters'), iters);
     gl.uniform1i(U('uView'), 4);

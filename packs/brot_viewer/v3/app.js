@@ -41,7 +41,7 @@ const QUALITY = {
 };
 
 const DEFAULTS = {
-  set: 'b_brot', julia: true, c: SETS.b_brot.c, beta: 0.47, w: 0, axis: false, theta: 0, spin: 0,
+  set: 'b_brot', julia: true, c: SETS.b_brot.c, beta: 0.47, w: 0, axis: false, jk: false, theta: 0, spin: 0,
   iters: 48, leash: 8, quality: 'live', view: 0, az: -0.56, el: 0.592, dist: 3.04,
   shadow: 1, shadowSteps: SHADOW_DEFAULTS.steps, lightSize: SHADOW_DEFAULTS.size, lightAz: SHADOW_DEFAULTS.az, lightEl: SHADOW_DEFAULTS.el,
   shadowBias: SHADOW_DEFAULTS.bias, shadowTh: SHADOW_DEFAULTS.th0, shadowSoft: SHADOW_DEFAULTS.soft,
@@ -92,7 +92,7 @@ function bindControls() {
   for (const [key, set] of Object.entries(SETS)) $('set').add(new Option(set.label, key));
   $('set').onchange = e => { state.set = e.target.value; state.c = [...SETS[state.set].c]; sync(); };
   $('julia').onchange = e => { state.julia = e.target.value === '1'; sync(); };
-  $('axis').onchange = e => { state.axis = e.target.value === '1'; sync(); };
+  $('axis').onchange = e => { state.axis = e.target.value === '1'; state.jk = false; sync(); };
   $('quality').onchange = e => { state.quality = e.target.value; sync(); };
   $('leash').onchange = e => { state.leash = +e.target.value; sync(); };
   $('iters').onchange = e => { state.iters = +e.target.value; sync(); };
@@ -212,11 +212,13 @@ function bindPicker() {
 
 // ---------------------------------------------------------------- share link
 
-const URL_KEYS = ['set', 'julia', 'c', 'beta', 'w', 'axis', 'theta', 'spin', 'iters', 'leash', 'quality', 'view', 'az', 'el', 'dist',
+const URL_KEYS = ['set', 'julia', 'c', 'beta', 'w', 'axis', 'jk', 'theta', 'spin', 'iters', 'leash', 'quality', 'view', 'az', 'el', 'dist',
   'shadow', 'shadowSteps', 'lightSize', 'lightAz', 'lightEl', 'refine', 'post', 'mist', 'mistW', 'mistMode', 'mistCoat'];
 
 function readUrl() {
   const q = new URLSearchParams(location.search), s = structuredClone(DEFAULTS);
+  // A key this page does not know is dropped, so the link may not show what its author saw: say so (insights 10-07).
+  for (const key of q.keys()) if (!URL_KEYS.includes(key) && key !== 'fault') console.warn(`brot_viewer: link key '${key}' is not used by this page and was ignored`);
   for (const key of URL_KEYS) {
     if (!q.has(key)) continue;
     const v = q.get(key), d = DEFAULTS[key];
@@ -286,6 +288,15 @@ function check() {
     const qview = { ...frameState({ ...base, set: key }), c: qc };
     const sym = diff(renderer.mask(map, { ...qview, beta: 0.47 }), renderer.mask(map, { ...qview, beta: 1.6 }));
     line(sym < 0.002, `${key === 'q' ? 'Q' : 'Q³'} symmetry: Julia at real C, β 27° vs 92°, masks differ on ${(100 * sym).toFixed(2)}% of pixels`);
+  }
+
+  // Julia β section = the j→k roll (insights + Doug 10-07): at β 0 the window is (real, i, j), exactly the axis cut
+  // (the B2 jbrot); a nonzero β moves it.
+  {
+    const lh = { ...view, set: 'b_brot', julia: true, c: [-0.7, 0, 0.27, 0], w: 0 };
+    const same = diff(renderer.mask('square', { ...lh, jk: false, axis: false, beta: 0 }), renderer.mask('square', { ...lh, axis: true, beta: 0 }));
+    const moved = diff(renderer.mask('square', { ...lh, jk: false, axis: false, beta: 1.2 }), renderer.mask('square', { ...lh, jk: false, axis: false, beta: 0 }));
+    line(same === 0 && moved > 0.002, `Julia β section (j→k): at β 0 equals the axis cut, the B2 jbrot (${(100 * same).toFixed(2)}% differ); β 69° moves it (${(100 * moved).toFixed(2)}%)`);
   }
 
   // Shadow: on vs off over the chi_l Julia. The shadow only scales the diffuse term, so no pixel may get brighter.

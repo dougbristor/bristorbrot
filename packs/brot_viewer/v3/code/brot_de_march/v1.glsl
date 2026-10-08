@@ -52,8 +52,14 @@ vec3 bdm_rot(vec3 p, vec2 th) {
   return vec3(p.x, th.y*p.y - th.x*p.z, th.x*p.y + th.y*p.z);
 }
 
+// β roll j→k (insights + Doug, 2026-10-07): the window (real, i, cos β·j + sin β·k), with the hidden axis
+// (−sin β·j + cos β·k) carrying the offset w. At β = 0 it is exactly the axis cut (real, i, j): the B2 jbrot. Off by
+// default, so every existing caller is unchanged; a host sets it (brot_viewer: for the Julia β section).
+bool bdmJK = false;
+
 vec4 bdm_seed(vec3 p, BdmSet s, float w) {
   vec3 q = bdm_rot(p, s.theta);
+  if (bdmJK) return vec4(q.x, q.y, s.beta.y*q.z - s.beta.x*w, s.beta.x*q.z + s.beta.y*w);
   if (s.axis) return vec4(q, w);
   return vec4(q.x, s.beta.x*q.y + s.beta.y*w, s.beta.y*q.y - s.beta.x*w, q.z);
 }

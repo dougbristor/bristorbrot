@@ -8,8 +8,9 @@ depends on both operand order and brackets: `(zz)z` and `z(zz)` can give differe
 
 ![b_brot Julia set, C = (-0.7, -0.35, 0.05, 0), rendered in brot_viewer v3](docs/brot_viewer_v3.png)
 
-*b_brot Julia set, `z² + c`, at C = (−0.7, −0.35, 0.05, 0), β = 27°.
-Rendered by the shipped v3 player with 64 refinement samples, sampled area-light shadows and edge smoothing; not retouched.*
+*b_brot Julia set, `z² + c`, at C = (−0.7, −0.35, 0.05, 0), Julia β section at β = 27° (the window rolls from j
+toward k; β = 0 is the B2 jbrot), camera distance 4.2. Rendered by the shipped v3 player with 64 refinement samples,
+sampled area-light shadows and edge smoothing; not retouched.*
 
 ## Try the viewer
 

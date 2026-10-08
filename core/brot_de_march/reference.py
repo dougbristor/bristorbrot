@@ -56,6 +56,8 @@ def dot(a, b):
 def seed(p, S, w):
     sb, cb, st, ct = math.sin(S['beta']), math.cos(S['beta']), math.sin(S['theta']), math.cos(S['theta'])
     q = [p[0], ct * p[1] - st * p[2], st * p[1] + ct * p[2]]
+    if S.get('jk'):                                   # β roll j→k: window (real, i, cos β j + sin β k)
+        return [q[0], q[1], cb * q[2] - sb * w, sb * q[2] + cb * w]
     if S['axis']:
         return q + [w]
     return [q[0], sb * q[1] + cb * w, cb * q[1] - sb * w, q[2]]
@@ -191,6 +193,26 @@ def generate():
             if hit != hit2 or abs(t - t2) > 2e-4 or abs(steps - steps2) > 1 or steps >= M['maxSteps']:
                 continue
             out['march'].append({'ro': ro, 'rd': rd, 'set': S, 'march': M, 'hit': hit, 't': t, 'steps': steps})
+    # β roll j→k (10-07), appended after every map so the cases above stay byte-identical: Julia sets on all five maps,
+    # with nonzero β and w so the roll and the hidden-axis offset both matter.
+    rng = random.Random(20261007)
+    for mp in MAPS:
+        got, tries = 0, 0
+        while got < 8 and tries < 200000:
+            tries += 1
+            S = dict(map=mp, beta=rng.uniform(0.3, 2 * math.pi - 0.3), theta=rng.uniform(0, 2 * math.pi),
+                     w=[0.0, 0.2, -0.15, 0.1][got % 4], axis=False, julia=True, jc=JC[mp][got % 2], iters=48, jk=True)
+            p = [x * rng.uniform(0.4, 2.0) for x in unit(rng)]
+            rd = unit(rng)
+            dd, ds, tone, n = de(p, rd, S)
+            if not (n <= 30 and dd > 1e-6 and ds > 1e-6) or n < 3:
+                continue
+            dd2, ds2, _, n2 = de(p, rd, S, f32)
+            nr, nr2 = normal(p, S), normal(p, S, f32)
+            if n2 != n or rel(dd, dd2) > 2e-4 or rel(ds, ds2) > 2e-4 or max(abs(a - b) for a, b in zip(nr, nr2)) > 2e-3:
+                continue
+            out['de'].append({'p': p, 'rd': rd, 'set': S, 'de_dir': dd, 'de_scalar': ds, 'tone': tone, 'n': n, 'normal': nr})
+            got += 1
     return out
 
 

@@ -10,6 +10,7 @@ uniform vec2  uJitter;      // sub-pixel offset of the primary ray (still refine
 uniform vec2  uBeta, uTheta; // (sin, cos) pairs, computed on the CPU
 uniform float uW;
 uniform int   uAxis, uJulia, uIters;
+uniform int   uJK;          // 1: force the β roll j→k (brot_de_march bdmJK) for either family
 uniform vec4  uC;
 
 uniform int   uMaxSteps;
@@ -38,6 +39,9 @@ vec3 background(vec3 rd) {
 }
 
 void main() {
+  // For a Julia set the β section IS the window rolling j→k, so β = 0 is the B2 jbrot (real, i, j) (insights + Doug 10-07).
+  // The Mandelbrot β section is unchanged. jk=1 in a link still forces the roll for either.
+  bdmJK = uJK == 1 || (uJulia == 1 && uAxis == 0);
   BdmSet s = BdmSet(uBeta, uTheta, uW, uAxis == 1, uJulia == 1, uC, uIters);
   if (uView == 4) {                          // control C2: bounded orbit = interior = scalar DE of exactly 0
     fragColor = vec4(vec3(bdm_de(uCamPos, vec3(1.0, 0.0, 0.0), s).y == 0.0 ? 1.0 : 0.0), 1.0);

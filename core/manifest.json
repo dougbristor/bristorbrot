@@ -1,6 +1,6 @@
 {
   "core": "Bristorbrot core blocks",
-  "built": "2026-10-07T09:15:30Z",
+  "built": "2026-10-07T21:30:55Z",
   "blocks": [
     {
       "id": "bristor_product",
@@ -295,19 +295,19 @@
         },
         {
           "path": "brot_de_march/conform_glsl.mjs",
-          "sha256": "6038284f2b0c6a86d1b8861edb92c800f0c8dc60d198ba1ba2aa75fd4d3b41ee"
+          "sha256": "8edb2b4b41ec0dbfde6f137e277082924e0ab7ceab7d6c7e20944f23fa06fa8a"
         },
         {
           "path": "brot_de_march/reference.py",
-          "sha256": "912bb3e49764cf3411ccf5cef37df8e7df2a5a43c68da83919699e6c866ac3fc"
+          "sha256": "f676173be58eba43c19f580e65d8253c887070144e86e16f0be312e6b295823b"
         },
         {
           "path": "brot_de_march/v1.glsl",
-          "sha256": "9971a1a67402a4c814c576ba5581308eb527577a00c3676b80505e49e0cbcd28"
+          "sha256": "7a4e58fc41f5a00114eeaf463ffc2aed2e39968de2145c5e6454f750f826bc61"
         },
         {
           "path": "brot_de_march/vectors.json",
-          "sha256": "44016791a9c675a9e30d4ac95584f4bd7893c9df07a007840156a68432df8be9"
+          "sha256": "f26c33019d6a130e21eac02ea6f76791d20db3590818bf897e7019be6f10c3b8"
         }
       ],
       "conformance": [
@@ -325,6 +325,8 @@
             "[ok ] Julia normal carries +dc: expected FAIL, got FAIL",
             "[ok ] beta seed swapped (cos on e1, sin on e2): expected FAIL, got FAIL",
             "[ok ] w offset along the section instead of across it: expected FAIL, got FAIL",
+            "[ok ] β roll j→k turned the wrong way: expected FAIL, got FAIL",
+            "[ok ] β roll j→k ignored (falls through to the β section): expected FAIL, got FAIL",
             "[ok ] hit tested on the directional DE: expected FAIL, got FAIL",
             "[ok ] leash ignored (pure directional step): expected FAIL, got FAIL",
             "[ok ] derivative transposed (square map): expected FAIL, got FAIL",

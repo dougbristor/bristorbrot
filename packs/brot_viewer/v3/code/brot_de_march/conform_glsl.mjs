@@ -35,6 +35,9 @@ const PLANTS = {
     'vec4(q.x, s.beta.y*q.y + s.beta.x*w, s.beta.x*q.y - s.beta.y*w, q.z)') },
   'w offset along the section instead of across it': { lib: s => s.replace('vec4(q.x, s.beta.x*q.y + s.beta.y*w, s.beta.y*q.y - s.beta.x*w, q.z)',
     'vec4(q.x, s.beta.x*(q.y + w), s.beta.y*(q.y + w), q.z)') },
+  'β roll j→k turned the wrong way': { lib: s => s.replace('if (bdmJK) return vec4(q.x, q.y, s.beta.y*q.z - s.beta.x*w, s.beta.x*q.z + s.beta.y*w);',
+    'if (bdmJK) return vec4(q.x, q.y, s.beta.y*q.z + s.beta.x*w, -s.beta.x*q.z + s.beta.y*w);') },
+  'β roll j→k ignored (falls through to the β section)': { lib: s => s.replace('if (bdmJK) return', 'if (false) return') },
   'hit tested on the directional DE': { lib: s => s.replace('if (f.y < eps) { tone = f.z; return true; }', 'if (f.x < eps) { tone = f.z; return true; }') },
   'leash ignored (pure directional step)': { lib: s => s.replace('float step = m.leash > 0.0 ? min(f.x, f.y * m.leash) : f.y;', 'float step = m.leash > 0.0 ? f.x : f.y;') },
   'derivative transposed (square map)': { map: { square: m => m.replace('return bp_Jv(z, v);', 'return transpose(bp_jacobian(z)) * v;') } },
@@ -50,7 +53,7 @@ precision highp int;
 ${ALGEBRA}
 ${map}
 ${lib}
-uniform int uMode, uIters, uJulia, uAxis, uMaxSteps, uAdaptive;
+uniform int uMode, uIters, uJulia, uAxis, uMaxSteps, uAdaptive, uJK;
 uniform vec3 uP, uRd, uRo;
 uniform vec4 uJc;
 uniform vec2 uBeta, uTheta;
@@ -58,6 +61,7 @@ uniform float uW, uBound, uSafety, uHitEps, uLod, uLens, uResY, uLeash;
 out vec4 o;
 void main() {
   int px = int(gl_FragCoord.x);
+  bdmJK = uJK == 1;
   BdmSet s = BdmSet(uBeta, uTheta, uW, uAxis == 1, uJulia == 1, uJc, uIters);
   if (uMode == 0) {
     o = px == 0 ? bdm_de(uP, uRd, s) : vec4(bdm_normal(uP, s), 0.0);
@@ -89,7 +93,7 @@ async function gpuRun(page, sources) {
     const use = S => { const p = progs[S.map]; gl.useProgram(p); const U = n => gl.getUniformLocation(p, n);
       gl.uniform2f(U('uBeta'), Math.sin(S.beta), Math.cos(S.beta)); gl.uniform2f(U('uTheta'), Math.sin(S.theta), Math.cos(S.theta));
       gl.uniform1f(U('uW'), S.w); gl.uniform1i(U('uAxis'), S.axis ? 1 : 0); gl.uniform1i(U('uJulia'), S.julia ? 1 : 0);
-      gl.uniform4fv(U('uJc'), S.jc); gl.uniform1i(U('uIters'), S.iters); return U; };
+      gl.uniform4fv(U('uJc'), S.jc); gl.uniform1i(U('uIters'), S.iters); gl.uniform1i(U('uJK'), S.jk ? 1 : 0); return U; };
     const draw = () => { gl.drawArrays(gl.TRIANGLES, 0, 3); gl.readPixels(0, 0, 2, 1, gl.RGBA, gl.FLOAT, px); return Array.from(px); };
     const de = V.de.map(r => { const U = use(r.set); gl.uniform1i(U('uMode'), 0); gl.uniform3fv(U('uP'), r.p); gl.uniform3fv(U('uRd'), r.rd); return draw(); });
     const march = V.march.map(r => { const M = r.march, U = use(r.set); gl.uniform1i(U('uMode'), 1);
