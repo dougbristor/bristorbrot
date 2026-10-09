@@ -2,7 +2,7 @@
   "viewer": "brot_viewer",
   "title": "Brot Viewer: b_brot, chi_brot and the quaternion sets q² and q³, Mandelbrot and Julia, with shadows, still refine, edge smoothing and mist",
   "version": "v3",
-  "built": "2026-10-07T21:32:42Z",
+  "built": "2026-10-09T15:21:32Z",
   "glue": [
     {
       "path": "index.html",
@@ -11,7 +11,7 @@
     },
     {
       "path": "app.js",
-      "sha256": "466202c8671521474a3ce32cbf65b825d188951f17e875e6d54470d43d7db6dd",
+      "sha256": "e19cfd1161016f84ff0d93ca15c12abf8926685a99c7c439dd3174c4769bbaae",
       "lines": 344
     },
     {

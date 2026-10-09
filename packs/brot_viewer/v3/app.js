@@ -42,7 +42,7 @@ const QUALITY = {
 
 const DEFAULTS = {
   set: 'b_brot', julia: true, c: SETS.b_brot.c, beta: 0.47, w: 0, axis: false, jk: false, theta: 0, spin: 0,
-  iters: 48, leash: 8, quality: 'live', view: 0, az: -0.56, el: 0.592, dist: 3.04,
+  iters: 48, leash: 8, quality: 'live', view: 0, az: -0.56, el: 0.592, dist: 4.2,
   shadow: 1, shadowSteps: SHADOW_DEFAULTS.steps, lightSize: SHADOW_DEFAULTS.size, lightAz: SHADOW_DEFAULTS.az, lightEl: SHADOW_DEFAULTS.el,
   shadowBias: SHADOW_DEFAULTS.bias, shadowTh: SHADOW_DEFAULTS.th0, shadowSoft: SHADOW_DEFAULTS.soft,
   refine: 64, post: 'both', stepJump: 3, postUntil: 8, mist: 0, mistW: 1, mistMode: 'edge', mistCoat: 0.3,
