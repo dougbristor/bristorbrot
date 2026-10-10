@@ -135,6 +135,10 @@ Existing pack versions are never overwritten; use a new version for a new build.
   points, b-splats and a 3D Gaussian Splatting export. Built the same way, from small checked blocks assembled by
   a thin page, but on an ordinary R⁴ affine IFS: it uses no Bristorian algebra.
 
+## Changes
+
+Every change and every correction, newest first, with what proved it: [RECEIPTS.md](RECEIPTS.md).
+
 ## Licence
 
 Code is MIT; see [`LICENSE`](LICENSE). Test vectors and other data files are
