@@ -1,6 +1,6 @@
 {
   "core": "Bristorbrot core blocks",
-  "built": "2026-10-07T21:30:55Z",
+  "built": "2026-10-11T10:45:42Z",
   "blocks": [
     {
       "id": "bristor_product",
@@ -271,7 +271,7 @@
       "files": [
         {
           "path": "brot_de_march/B2_PORTING.md",
-          "sha256": "707fa917b6356095ffba0b27b92fe3905a4c96bedc84f273e14c3c5c6b6407aa"
+          "sha256": "670f79c14b52184ff903c0ad48a701a3ae26df5d73064aa7214dbfd3e1dfb1ae"
         },
         {
           "path": "brot_de_march/b2_conform.mjs",

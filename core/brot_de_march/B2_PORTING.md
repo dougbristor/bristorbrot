@@ -9,6 +9,21 @@ license: MIT code; CC0 vectors; CC-BY 4.0 text
 
 # B2 export: one field, three consumers
 
+## What B2 and B3 mean
+
+Bn has n ranked imaginary units above the real part. Thus B2 has basis
+(1, i, j), three real components, and B3 has basis (1, i, j, k), four real
+components. The imaginary ranks are 1 through n: n is both their count and
+the highest rank number. The algebra's real dimension is n+1, and the
+construction has no fixed upper limit on n.
+
+This note covers the B2 variant `b2_v1.glsl`. The generic four-component
+`brot_de_march/v1.glsl`, paired with the `vec4` overloads in
+`bristor_product/v1.glsl`, is the B3 path. There is currently no separate
+`B3_PORTING.md`; the B2 measurements below must not be read as B3 results.
+
+## The variant
+
 `b2_v1.glsl` is a **variant of brot_de_march**, not a competing default block.
 It keeps Astra's three-component fast-B2 orbit, common derivative rescale and
 finite-depth normal, and reuses the generic block's `BdmMarch` contract and march

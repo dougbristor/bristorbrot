@@ -10,6 +10,16 @@ trace the change back to its commit, where the full detail is.
 Each algebra block also keeps its own record in the source tree that `core/` is built from. This file covers what
 reaches this repository.
 
+## 2026-10-11 · change · B2_PORTING.md says what B2 and B3 mean
+
+- **What:** `core/brot_de_march/B2_PORTING.md` opens with a definition: Bn has n ranked imaginary units (B2 =
+  (1, i, j), B3 = (1, i, j, k), real dimension n+1, no upper limit on n). It also says that the note covers the B2
+  variant only and that `v1.glsl` is the B3 path, so its B2 measurements are not B3 results. Before, the note never
+  said what the 2 in B2 meant.
+- **Asked:** Doug Bristor, before linking the note to engine writers. Wording reviewed by caro.
+- **Checked by:** prose only. `core/` rebuilt from the source block: 8 blocks, 19 conformance runs pass. The public
+  copy is byte-identical to the source, and only this file and its manifest hash changed.
+
 ## 2026-10-10 · change · these receipts
 
 - **What:** RECEIPTS.md, backfilled from the commit history, and a link to it from the README.
