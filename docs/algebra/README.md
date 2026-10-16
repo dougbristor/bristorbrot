@@ -4,7 +4,8 @@ The scripts behind [bristorbrot.org/algebra](https://bristorbrot.org/algebra/). 
 [`core/bristor_product`](../../core/bristor_product/). Run them from the repository root; they need `numpy`
 (and `pillow` and `scipy` for the slices).
 
-- `check_claims.py` recomputes every claim on the page that is tagged **checked**: 21 claims, all expected to pass.
+- `check_claims.py` recomputes every claim on the page that is tagged **checked**: 22 claims, all expected to pass (`E1`, the escape floor, is a measured
+  minimum, not a proof, and says so).
   `--sabotage` swaps in the j-roll product (i·j = −j). The eight claims written in i-roll terms (P1, P2, P11, P12, P15, S1, S2, S3)
   must then fail and the rest still pass, which shows that the checker can tell the two apart.
 - `mslices.py` draws the 2-D slices of the B2 Mandelbrot set. Each pixel is coloured by whether it lies in both the

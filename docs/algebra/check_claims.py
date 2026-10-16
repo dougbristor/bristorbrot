@@ -5,7 +5,7 @@ re-run here, and the page says which kind each claim is.
 
 Control: `--sabotage` swaps in the j-roll product (the legacy 1995 table, i·j = −j). The product-table and slice
 claims are written in i-roll terms, so they MUST fail under it; the roll-invariant claims (counts, zero divisor,
-non-alternativity, squaring blindness) must still pass. If the sabotage run passes everything, the checker cannot
+non-alternativity, squaring blindness, the escape floor) must still pass. If the sabotage run passes everything, the checker cannot
 tell the rolls apart and is decoration.
 
 Run from the repository root: python3 docs/algebra/check_claims.py [--sabotage]   (needs numpy; reads mslices/mslices.json)
@@ -230,6 +230,70 @@ claim('S5', 'between 0° and 90° the missed share peaks near 20° and 70° (abo
 # S6 c = −1 is superattracting in full B3: the 2-cycle {0, −1} has Jacobian product exactly 0
 J0 = np.array(v1.square_jacobian([0.0, 0, 0, 0])).reshape(4, 4); J1 = np.array(v1.square_jacobian([-1.0, 0, 0, 0])).reshape(4, 4)
 claim('S6', 'at c = −1 the cycle 0 → −1 → 0 attracts in all four dimensions (multiplier exactly 0)', np.abs(J1 @ J0).max() == 0.0)
+
+# E1 escape floor: |z·z| >= m_n |z|^2 with m_n > 0. MEASURED (a numerical minimum over the unit sphere), not a proof.
+# The search is a vectorised copy of the square, so it is first held to the core product (mul above) on random numbers;
+# a copy that disagrees with the product would give a floor for some other algebra. Control: a planted algebra with a
+# nilpotent unit (e_1·e_1 = 0 instead of −1) has numbers whose square is 0, so the same search must read ~0 there.
+def vsq_i(Z, nil=False):
+    x = Z[:, :1]; A = Z[:, 1:]
+    cs = np.cumsum(A, 1); below = cs - A; above = cs[:, -1:] - cs
+    re = x[:, 0] ** 2 - (A ** 2).sum(1) + (A[:, 0] ** 2 if nil else 0)
+    return np.column_stack([re, A * (2 * x + below - above)])
+
+
+def vsq(Z, nil=False):                                   # follows the active roll, as mul does: reverse ranks, square, reverse back
+    if not SABOTAGE:
+        return vsq_i(Z, nil)
+    R = lambda W: np.column_stack([W[:, :1], W[:, :0:-1]])
+    return R(vsq_i(R(Z), nil))
+
+
+def sq_ratio(Z, nil=False):
+    return np.linalg.norm(vsq(Z / np.linalg.norm(Z, axis=1, keepdims=True), nil), axis=1)
+
+
+def floor(n, nil=False, seed=1, N=200000, starts=20):
+    r = np.random.default_rng(seed)
+    Z = r.normal(size=(N, n + 1)); q = sq_ratio(Z, nil); best = q.min()
+    for z0 in Z[np.argsort(q)[:starts]]:                 # refine the lowest samples by a shrinking random search
+        z = z0 / np.linalg.norm(z0); f = sq_ratio(z[None], nil)[0]; step = 0.3; stall = 0
+        while step > 1e-9:
+            C = z + step * r.normal(size=(400, n + 1)); qc = sq_ratio(C, nil); k = qc.argmin()
+            if qc[k] < f:
+                z = C[k] / np.linalg.norm(C[k]); f = qc[k]; stall = 0
+            else:
+                stall += 1
+                if stall >= 3: step *= 0.5; stall = 0
+        best = min(best, f)
+    return best
+
+
+M_REC = {2: 3 ** -0.5, 3: 0.505827, 4: 0.442012, 6: 0.366537, 8: 0.317959}      # recorded floors; B2 is 1/√3 in closed form
+floor_ok = lambda n, m: abs(m - M_REC[n]) < (1e-6 if n == 2 else 2e-6)
+meas = {n: floor(n) for n in M_REC}
+conf = 0.0
+for n in M_REC:
+    Zc = rng.normal(size=(200, n + 1))
+    conf = max(conf, max(abs(np.linalg.norm(vsq(Zc[t:t + 1])) - np.linalg.norm(mul(list(Zc[t]), list(Zc[t])))) for t in range(200)))
+plant = floor(3, nil=True)
+# the consequence, run on the core product: once |z| > 2/m_n and |z| >= |c|, every step grows |z|, so the orbit escapes
+grows = True
+for n in M_REC:
+    R = 2 / meas[n]
+    for _ in range(100):
+        zz_ = rng.normal(size=n + 1); zz_ = list(zz_ / np.linalg.norm(zz_) * R * (1.02 + 2 * rng.random()))
+        cc_ = rng.normal(size=n + 1); cc_ = list(cc_ / np.linalg.norm(cc_) * np.linalg.norm(zz_) * rng.random())
+        for _ in range(5):
+            nz = add(mul(zz_, zz_), cc_)
+            grows &= np.linalg.norm(nz) > np.linalg.norm(zz_); zz_ = nz
+claim('E1', 'MEASURED, not proved: in Bn the square keeps a fixed share of the size, |z·z| ≥ m_n·|z|², with m_2 = 1/√3 = 0.5774, m_3 = 0.5058, '
+      'm_4 = 0.4420 (and m_6 = 0.3665, m_8 = 0.3180). So once |z| ≥ |c| and |z| > 2/m_n the orbit escapes for good (radius about 3.46 in B2, 3.95 in B3, '
+      '4.53 in B4), and the viewers\' radius 8 is safe for |c| ≤ 8',
+      all(floor_ok(n, meas[n]) for n in M_REC) and conf < 1e-12 and grows and all(2 / meas[n] <= 8 for n in M_REC)
+      and plant < 1e-6 and not floor_ok(3, plant),
+      f'floors ' + ', '.join(f'B{n} {meas[n]:.6f}' for n in M_REC) + f'; copy of the square vs mul: {conf:.1e}; '
+      f'control (e_1² = 0) floor {plant:.1e}, which the same test rejects')
 
 CITED = [
     ('B ≇ B^op: no invertible linear map turns the product into the opposite algebra (the algebra has a hand)', 'proved', 'Gröbner basis = [1] for the anti-isomorphism equations, B2, B3, B4, 2026-07'),

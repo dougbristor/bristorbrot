@@ -10,6 +10,19 @@ trace the change back to its commit, where the full detail is.
 Each algebra block also keeps its own record in the source tree that `core/` is built from. This file covers what
 reaches this repository.
 
+## 2026-10-16 · change · claim E1: the square keeps a fixed share of the size (escape radius)
+
+- **What:** `docs/algebra/check_claims.py` has a new checked claim, `E1`. In Bn, |z·z| ≥ m_n·|z|² with m_n > 0
+  (m_2 = 1/√3, m_3 = 0.5058, m_4 = 0.4420), so an orbit escapes once |z| ≥ |c| and |z| > 2/m_n, and the radius 8 the
+  viewers use is safe for |c| ≤ 8. It is labelled **measured**: a numerical minimum over the unit sphere, not a proof.
+  The checker now passes 22 of 22 (still 14 of 22 under `--sabotage`, where the same eight i-roll claims fail).
+- **Asked:** fable and insights (the claim and the request for a check); Doug Bristor.
+- **Checked by:** the floor search is a copy of the square, so it is held to `core/bristor_product` on random numbers
+  first (agreement 7e-15). Fable's values are reproduced to six digits, and insights reproduced them independently.
+  A planted algebra with a nilpotent unit must read ~0 (it reads 4e-11), and the same test rejects it. Six deliberate
+  faults each make `E1` fail and nothing else: a wrong square in the copy, a wrong recorded floor, a control that does
+  not fire, no refinement, an escape test started below 2/m, and a Hamilton square.
+
 ## 2026-10-11 · change · B2_PORTING.md says what B2 and B3 mean
 
 - **What:** `core/brot_de_march/B2_PORTING.md` opens with a definition: Bn has n ranked imaginary units (B2 =
