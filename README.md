@@ -2,6 +2,9 @@
 
 **Website: [bristorbrot.org](https://bristorbrot.org)**: the project home, with the algebra explained and a gallery.
 
+**The product is checked in Lean 4:** [dougbristor/bristor.lean](https://github.com/dougbristor/bristor.lean) proves its structure
+and runs the same test vectors as [`core/bristor_product/vectors.json`](core/bristor_product/vectors.json).
+
 Explore quadratic and cubic fractals in **Bristorian algebra**, and compare them with quaternion
 fractals. Bristorian numbers, called **imordials**, have ranked imaginary units. Their multiplication
 depends on both operand order and brackets: `(zz)z` and `z(zz)` can give different answers.

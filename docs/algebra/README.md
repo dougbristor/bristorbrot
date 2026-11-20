@@ -4,6 +4,9 @@ The scripts behind [bristorbrot.org/algebra](https://bristorbrot.org/algebra/). 
 [`core/bristor_product`](../../core/bristor_product/). Run them from the repository root; they need `numpy`
 (and `pillow` and `scipy` for the slices).
 
+The product itself is proved in Lean 4 in [dougbristor/bristor.lean](https://github.com/dougbristor/bristor.lean), which also
+checks it against the same test vectors as `core/bristor_product/vectors.json`.
+
 - `check_claims.py` recomputes every claim on the page that is tagged **checked**: 22 claims, all expected to pass (`E1`, the escape floor, is a measured
   minimum, not a proof, and says so).
   `--sabotage` swaps in the j-roll product (i·j = −j). The eight claims written in i-roll terms (P1, P2, P11, P12, P15, S1, S2, S3)
