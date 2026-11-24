@@ -29,9 +29,9 @@ reaches this repository.
   (m_2 = 1/√3, m_3 = 0.5058, m_4 = 0.4420), so an orbit escapes once |z| ≥ |c| and |z| > 2/m_n, and the radius 8 the
   viewers use is safe for |c| ≤ 8. It is labelled **measured**: a numerical minimum over the unit sphere, not a proof.
   The checker now passes 22 of 22 (still 14 of 22 under `--sabotage`, where the same eight i-roll claims fail).
-- **Asked:** fable and insights (the claim and the request for a check); Doug Bristor.
+- **Asked:** Doug Bristor (the claim and the request for a check came from the algebra work).
 - **Checked by:** the floor search is a copy of the square, so it is held to `core/bristor_product` on random numbers
-  first (agreement 7e-15). Fable's values are reproduced to six digits, and insights reproduced them independently.
+  first (agreement 7e-15). The claim's values are reproduced to six digits, and an independent reproduction agrees.
   A planted algebra with a nilpotent unit must read ~0 (it reads 4e-11), and the same test rejects it. Six deliberate
   faults each make `E1` fail and nothing else: a wrong square in the copy, a wrong recorded floor, a control that does
   not fire, no refinement, an escape test started below 2/m, and a Hamilton square.
@@ -42,7 +42,7 @@ reaches this repository.
   (1, i, j), B3 = (1, i, j, k), real dimension n+1, no upper limit on n). It also says that the note covers the B2
   variant only and that `v1.glsl` is the B3 path, so its B2 measurements are not B3 results. Before, the note never
   said what the 2 in B2 meant.
-- **Asked:** Doug Bristor, before linking the note to engine writers. Wording reviewed by caro.
+- **Asked:** Doug Bristor, before linking the note to engine writers. Wording reviewed before use.
 - **Checked by:** prose only. `core/` rebuilt from the source block: 8 blocks, 19 conformance runs pass. The public
   copy is byte-identical to the source, and only this file and its manifest hash changed.
 
@@ -64,7 +64,7 @@ reaches this repository.
 
 - **What:** `docs/algebra/`: the checker behind the claims on [bristorbrot.org/algebra](https://bristorbrot.org/algebra/),
   and the slice pictures it reads.
-- **Asked:** Doug Bristor; written by insights.
+- **Asked:** Doug Bristor; minded by insights.
 - **Proved by:** `check_claims.py` recomputes the 21 checked claims from `core/bristor_product` (21/21 pass). With
   `--sabotage` it swaps in the older j-roll product, and exactly the 8 claims written in i-roll terms fail.
 
@@ -73,10 +73,10 @@ reaches this repository.
 - **What:** for a Julia set, the β section now rolls the window (real, i, cos β·j + sin β·k), so β = 0 is the B2 jbrot
   (real, i, j). The Mandelbrot β section is unchanged. Unknown link keys now warn in the console instead of being
   dropped silently.
-- **Asked:** Doug Bristor, via insights.
+- **Asked:** Doug Bristor.
 - **Proved by:** `brot_de_march` GPU conformance gains 40 j→k cases, plus two broken versions (roll reversed, roll
   ignored) that must fail. A new page check: at β 0 the section equals the axis cut (0.00% different), and at β 69° it
-  moves. The player is pixel-identical to insights' lab copy on 8 scenes.
+  moves. The player is pixel-identical to the lab copy on 8 scenes.
 
 ## 2026-10-07 · correction · every render was mirrored left-right · `91a3665`
 
@@ -84,7 +84,7 @@ reaches this repository.
   The camera took screen right as up × forward.
 - **Wrong because:** that makes screen right show world −x when looking along +z, a left-handed picture. The earlier
   page checks (spin, quaternion symmetry, shadow) can't see a mirror, so none of them fired.
-- **Tell:** Doug saw it by eye, and insights confirmed it against an independent page (outline overlap 0.80 as
+- **Tell:** Doug saw it by eye, and it was confirmed against an independent page (outline overlap 0.80 as
   rendered, 0.955 flipped).
 - **Fixed by:** screen right is now forward × up. A new page check, "picture hand", uses an outside fact: the
   classical Mandelbrot set's area centroid (−0.287) lies right of the view centre (−0.5), so its mass must sit left
@@ -113,8 +113,8 @@ reaches this repository.
 - **Wrong because:** "mirror image" is ambiguous (the opposite algebra is a defined object). The refine samples the
   light; it doesn't solve it exactly. Renders are finite escape tests, not certified geometry. And CC BY text needs
   attribution where MIT code doesn't, so one flag was wrong for one kind of file.
-- **Tell:** caro's read-over of the README before launch.
-- **Fixed by:** caro's rewrite of the front page, and per-kind licence terms (code, data, text) in `build_pack.py`.
+- **Tell:** a read-over of the README before launch.
+- **Fixed by:** a rewrite of the front page, and per-kind licence terms (code, data, text) in `build_pack.py`.
   Packs built earlier keep their manifests as they were; the README notes that de_ray v1's manifest carries the
   older flag.
 
@@ -146,9 +146,9 @@ reaches this repository.
 
 ## 2026-10-04 · change · v3: q³, shadows, still refine, edge smoothing, mist · `040d828`
 
-- **What:** two new blocks from insights' shadow lab, `bdm_shadow` and `edge_post`, plus the quaternion cube q³, a
+- **What:** two new blocks from the shadow lab, `bdm_shadow` and `edge_post`, plus the quaternion cube q³, a
   movable light, body spin, still refine, edge smoothing and an optional mist film.
-- **Asked:** Doug Bristor; the lab work is insights'.
+- **Asked:** Doug Bristor; the lab work is minded by insights.
 - **Proved by:** two new page checks, each with a fault switch that must make it fail: the shadow darkens and never
   brightens, and spinning the body equals turning the camera one way and the light the other. Pixel-identical to
   the lab at the same settings on 5 scenes.
