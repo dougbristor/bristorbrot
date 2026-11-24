@@ -17,11 +17,11 @@ reaches this repository.
   theorems) and against the same test vectors as `core/bristor_product/vectors.json`. Prose only: no code, vector or
   block file changed. No pointer was added inside `core/bristor_product/`, because `core/` is built from the source
   blocks and a file added there would not survive a rebuild.
-- **Asked:** Doug Bristor, 2026-11-20 ("lets do 3"); the repository and its bundle are insights'.
+- **Asked:** Doug Bristor, 2026-11-20 ("lets do 3"); the repository and its bundle are minded by insights.
 - **Checked by:** the new repository's `vectors/vectors.json` and `core/bristor_product/vectors.json` have the same
   sha256 (`83be4ccef071…`), read back from GitHub for both. Both links resolve.
 - **Not checked by git:** the Lean proof itself. The 13 theorems, 19 of 19 vectors and 7 of 7 planted false claims are
-  insights' run of 2026-11-20; Lean is not installed here, so git did not re-run it.
+  the Lean repository's own run of 2026-11-20; Lean is not installed here, so git did not re-run it.
 
 ## 2026-10-16 · change · claim E1: the square keeps a fixed share of the size (escape radius)
 
